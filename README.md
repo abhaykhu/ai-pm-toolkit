@@ -305,17 +305,6 @@ The update script:
 
 ---
 
-## Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for:
-
-- How to report bugs
-- Feature requests
-- Pull request process
-- Coding standards
-
----
-
 ## Version History
 
 - **1.0.0** (2026-01-23) - Initial release
@@ -329,7 +318,7 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
 ## License
 
-[Choose appropriate license - MIT, Apache 2.0, etc.]
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
