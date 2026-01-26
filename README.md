@@ -1,6 +1,6 @@
 # AI PM Toolkit
 
-**AI-powered product management tools for faster, higher-quality PRD writing.**
+**AI-powered product management tools for enabling faster, higher-quality product management work.**
 
 This toolkit integrates with [Claude Code](https://claude.ai/download) to provide automated PRD writing, competitive research, customer feedback analysis, and quality assurance.
 
