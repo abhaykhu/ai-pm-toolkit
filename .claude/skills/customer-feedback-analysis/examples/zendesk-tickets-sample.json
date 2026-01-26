@@ -1,0 +1,159 @@
+{
+  "tickets": [
+    {
+      "id": 12345,
+      "subject": "Need flight-level email stats for reporting",
+      "description": "Our team needs to see performance data for each individual email send (flight) within a campaign, not just the campaign totals. Currently we have to manually pull this from CSVs which is very time-consuming.\n\nWe run A/B tests at the flight level and need to see which variations performed better. The current reporting doesn't support this workflow.",
+      "status": "open",
+      "priority": "high",
+      "created_at": "2025-12-20T15:45:00Z",
+      "updated_at": "2026-01-08T10:30:00Z",
+      "requester": {
+        "id": 67890,
+        "name": "Jane Smith",
+        "email": "jane@acmenonprofit.org"
+      },
+      "organization": {
+        "id": 99999,
+        "name": "ACME Nonprofit"
+      },
+      "tags": ["feature-request", "email", "reporting"],
+      "custom_fields": [
+        {
+          "id": 360012345678,
+          "name": "ARR",
+          "value": "45000"
+        },
+        {
+          "id": 360012345679,
+          "name": "Tier",
+          "value": "Advanced"
+        }
+      ]
+    },
+    {
+      "id": 12346,
+      "subject": "Lookalike campaign attribution missing from reports",
+      "description": "We're running lookalike audience campaigns through Pixl Plus but cannot see attribution in our reports. Need to know which conversions/donations came from lookalike vs. retargeting vs. prospecting audiences.\n\nWithout this data, we can't determine if our lookalike spend is effective. This is blocking our Q1 budget planning.",
+      "status": "open",
+      "priority": "urgent",
+      "created_at": "2026-01-06T09:20:00Z",
+      "updated_at": "2026-01-14T14:15:00Z",
+      "requester": {
+        "id": 67891,
+        "name": "David Martinez",
+        "email": "david@healthaccess.org"
+      },
+      "organization": {
+        "id": 99998,
+        "name": "Health Access Coalition"
+      },
+      "tags": ["feature-request", "advertising", "pixl-plus", "reporting"],
+      "custom_fields": [
+        {
+          "id": 360012345678,
+          "name": "ARR",
+          "value": "32000"
+        },
+        {
+          "id": 360012345679,
+          "name": "Tier",
+          "value": "Essential"
+        }
+      ]
+    },
+    {
+      "id": 12347,
+      "subject": "RE NXT sync not handling recurring gifts correctly",
+      "description": "When donors make recurring gift commitments through our donation forms, the gifts are creating one-time opportunities in RE NXT instead of recurring gift records.\n\nWe need the Feathr -> RE NXT sync to properly create recurring gift records with the correct frequency (monthly, quarterly, annual) and start date. Currently our development team has to manually fix these in RE NXT which defeats the purpose of the integration.",
+      "status": "open",
+      "priority": "high",
+      "created_at": "2025-12-15T11:30:00Z",
+      "updated_at": "2026-01-10T16:45:00Z",
+      "requester": {
+        "id": 67892,
+        "name": "Patricia Anderson",
+        "email": "patricia@museumfriends.org"
+      },
+      "organization": {
+        "id": 99997,
+        "name": "Museum Friends Society"
+      },
+      "tags": ["feature-request", "integration", "re-nxt", "fundraising"],
+      "custom_fields": [
+        {
+          "id": 360012345678,
+          "name": "ARR",
+          "value": "28000"
+        },
+        {
+          "id": 360012345679,
+          "name": "Tier",
+          "value": "Advanced"
+        }
+      ]
+    },
+    {
+      "id": 12348,
+      "subject": "Content editor permissions too broad - security concern",
+      "description": "We hired a freelance copywriter to help with our email campaigns but the Content Editor role gives them access to audience management and person records, which they shouldn't see due to our data privacy policies.\n\nWe need a more restricted role that can:\n- Edit email content and templates\n- Edit landing page content\n- Preview campaigns\n\nBut CANNOT:\n- View person records or audience lists\n- View reports or analytics\n- Manage integrations or account settings\n\nThis is a compliance issue for us and we may need to stop using contractors until this is resolved.",
+      "status": "open",
+      "priority": "urgent",
+      "created_at": "2025-12-28T14:00:00Z",
+      "updated_at": "2026-01-13T11:20:00Z",
+      "requester": {
+        "id": 67893,
+        "name": "Rachel Green",
+        "email": "rachel@privacymatters.org"
+      },
+      "organization": {
+        "id": 99996,
+        "name": "Privacy Matters Foundation"
+      },
+      "tags": ["feature-request", "platform", "permissions", "security"],
+      "custom_fields": [
+        {
+          "id": 360012345678,
+          "name": "ARR",
+          "value": "52000"
+        },
+        {
+          "id": 360012345679,
+          "name": "Tier",
+          "value": "Advanced"
+        }
+      ]
+    },
+    {
+      "id": 12349,
+      "subject": "Multi-language donation forms for international campaigns",
+      "description": "We need donation forms that can display in multiple languages based on the donor's browser language setting. Currently we have to create separate forms for each language which is a maintenance nightmare when we update content.\n\nIdeal solution:\n- Form builder allows entering content in multiple languages\n- Form automatically displays in correct language based on browser setting\n- Fallback to English if translation not available\n- Track donor's preferred language for future communications\n\nWe operate in 12 countries and this is becoming a major pain point. Competitors like Givebutter have this feature and we're getting pressure from our international team to switch.",
+      "status": "open",
+      "priority": "high",
+      "created_at": "2025-11-30T10:15:00Z",
+      "updated_at": "2026-01-16T09:30:00Z",
+      "requester": {
+        "id": 67894,
+        "name": "Sophie Dubois",
+        "email": "sophie@globalwellness.org"
+      },
+      "organization": {
+        "id": 99995,
+        "name": "Global Wellness Initiative"
+      },
+      "tags": ["feature-request", "fundraising", "internationalization"],
+      "custom_fields": [
+        {
+          "id": 360012345678,
+          "name": "ARR",
+          "value": "68000"
+        },
+        {
+          "id": 360012345679,
+          "name": "Tier",
+          "value": "Advanced"
+        }
+      ]
+    }
+  ]
+}

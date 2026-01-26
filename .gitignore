@@ -1,0 +1,27 @@
+# AI PM Toolkit - Source Repository
+# This .gitignore is for the toolkit source, not the installed version
+
+# Development and tracking files (working notes, not for distribution)
+CLAUDE.md
+
+# Internal summaries directory - all development tracking docs
+.internal-summaries/
+
+# System files
+.DS_Store
+*.log
+
+# Backup files
+*.backup.md
+*.bak
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Test installation directories (if you test locally)
+test-install/
+tmp-install/

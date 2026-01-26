@@ -1,0 +1,112 @@
+GONG CALL TRANSCRIPT
+====================
+Call ID: call_qbr_20260110_acme
+Title: Quarterly Business Review - ACME Nonprofit
+Date: January 10, 2026, 2:00 PM EST
+Duration: 52 minutes
+
+PARTICIPANTS:
+- Jane Smith (Customer Success Manager, ACME Nonprofit) - jane@acmenonprofit.org
+- Sarah Johnson (Customer Success Manager, Feathr) - sarah@feathr.co
+- Mike Chen (VP Product, Feathr) - mike@feathr.co [joined at 15:00]
+
+---
+
+[00:02:15] Sarah Johnson:
+Thanks for joining us today, Jane. How has your Q4 been with Feathr?
+
+[00:02:22] Jane Smith:
+Overall good. We've sent about 45 email campaigns and our engagement metrics are up 15% year-over-year, so we're happy with that.
+
+[00:03:40] Sarah Johnson:
+That's great to hear! What's working well for you?
+
+[00:03:48] Jane Smith:
+The email builder is solid, and we love the Salesforce integration. It's saving our team probably 10 hours a week on data entry.
+
+[00:04:55] Sarah Johnson:
+Wonderful. And what areas do you think we could improve?
+
+[00:05:02] Jane Smith:
+Honestly, the biggest pain point for us right now is reporting. Specifically around email performance.
+
+[00:05:18] Sarah Johnson:
+Tell me more about that.
+
+[00:05:23] Jane Smith:
+So we run multi-send campaigns - typically 5 to 10 individual emails per campaign for different segments or A/B tests. And what's frustrating is that we can only see aggregate performance for the whole campaign. We can't break it down to see which specific emails performed best.
+
+[00:06:45] Jane Smith:
+We call them "flights" internally - each send is a flight. And we desperately need flight-level activity tables in the dashboard. Right now we have to export CSVs and spend hours in Excel every week just to understand which emails are actually driving engagement.
+
+[00:07:30] Sarah Johnson:
+I understand. That does sound time-consuming. How critical is this for your team?
+
+[00:07:38] Jane Smith:
+It's pretty critical. Our executive team is very data-driven and they want to see ROI on every campaign. Without flight-level data, we're basically guessing about what's working. I've submitted this in Canny and I see other customers asking for it too.
+
+[00:08:55] Sarah Johnson:
+Absolutely, I'll make sure this feedback gets to our product team. Let me bring Mike in - he's actually joining us now.
+
+[00:09:10] Mike Chen:
+Hey Jane, sorry I'm late. What did I miss?
+
+[00:09:15] Sarah Johnson:
+We were just talking about email reporting and the need for flight-level performance data.
+
+[00:09:22] Mike Chen:
+Ah yes, this has been coming up a lot lately. Jane, can you tell me more about your use case?
+
+[00:09:30] Jane Smith:
+Sure. Like I was telling Sarah, we run campaigns with multiple sends - sometimes we're A/B testing subject lines across different segments, sometimes we're doing sequential sends with different content. And right now we only see rolled-up metrics for the entire campaign.
+
+[00:10:45] Jane Smith:
+What we need is a table in the dashboard that shows opens, clicks, conversions for each individual flight. Ideally with the ability to filter by date range, segment, and goal type.
+
+[00:11:20] Mike Chen:
+That makes sense. Is this blocking any workflows for you?
+
+[00:11:25] Jane Smith:
+Not blocking per se, but it's creating a lot of manual work. And honestly, one thing that's been frustrating for our team is not being able to see email performance at the flight level in a modern, easy-to-use way. We're doing all this manual Excel analysis and it feels very 2010.
+
+[00:12:40] Jane Smith:
+And I'll be straight with you - if we don't get better reporting tools soon, we're going to have to look at alternatives. Our leadership is pushing us to be more data-driven and we just can't with the current setup. I know Mailchimp and Constant Contact have this kind of reporting built in.
+
+[00:13:15] Mike Chen:
+I hear you loud and clear. This is definitely on our radar and we're looking at how to prioritize it. Let me take this back to the team.
+
+[00:14:00] Jane Smith:
+I'd really appreciate that. It's not just us - I've talked to other Feathr customers at conferences and everyone has this same complaint.
+
+[00:15:30] Sarah Johnson:
+Anything else on the reporting side, Jane?
+
+[00:15:35] Jane Smith:
+The other thing - and this is less urgent - is that we'd love to be able to export this flight-level data once we have it in the dashboard. For board meetings and annual reports, we need to pull data into PowerPoint and having a good export feature would save time there too.
+
+[00:16:20] Mike Chen:
+Got it. So dashboard visibility is priority one, export capability is nice to have.
+
+[00:16:25] Jane Smith:
+Exactly.
+
+[... rest of call covers account health, upcoming campaigns, billing questions ...]
+
+[00:48:30] Sarah Johnson:
+Thanks so much for your time today, Jane. Mike and I will follow up on the reporting feedback.
+
+[00:48:40] Jane Smith:
+Thank you both. I really appreciate you listening to our needs.
+
+[END OF TRANSCRIPT]
+
+---
+
+CALL METADATA:
+Topics: Email campaigns, Reporting needs, Feature requests, Customer health
+Sentiment: Generally positive but frustrated with reporting limitations
+Urgency Indicators: "look at alternatives", "frustrating", "leadership pushing", "critical"
+Action Items:
+- Mike Chen to discuss flight-level email reporting with product team
+- Sarah Johnson to follow up with Jane in 2 weeks on feedback status
+- Consider prioritizing email reporting improvements for Q1 roadmap

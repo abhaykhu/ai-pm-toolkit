@@ -1,0 +1,197 @@
+{
+  "boards": [
+    {
+      "id": "board_featreq_001",
+      "name": "Feature Requests",
+      "postCount": 342,
+      "url": "https://feathr.canny.io/feature-requests"
+    },
+    {
+      "id": "board_fundraising_002",
+      "name": "Fundraising Feedback",
+      "postCount": 89,
+      "url": "https://feathr.canny.io/fundraising"
+    }
+  ],
+  "posts": [
+    {
+      "id": "post_1234",
+      "title": "Flight-level email activity tables",
+      "details": "We need to see email performance broken down by individual flights (sends), not just rolled up at the campaign level. This would help us understand which specific emails performed best so we can optimize our campaigns.\n\nCurrently, we see aggregate opens/clicks for the entire campaign, but we send 5-10 emails per campaign and need to know which ones are actually driving engagement.",
+      "score": 45,
+      "votes": 15,
+      "commentCount": 7,
+      "status": "open",
+      "created": "2025-11-15T10:30:00Z",
+      "updated": "2026-01-10T14:22:00Z",
+      "author": {
+        "name": "Jane Smith",
+        "email": "jane@acmenonprofit.org"
+      },
+      "board": {
+        "name": "Feature Requests"
+      },
+      "comments": [
+        {
+          "id": "comment_789",
+          "value": "This is critical for us. We currently have to export CSVs and manually analyze in Excel, which takes hours every week.",
+          "created": "2025-11-20T09:15:00Z",
+          "author": {
+            "name": "Bob Johnson",
+            "email": "bob@helpinghandsnpo.org"
+          }
+        },
+        {
+          "id": "comment_790",
+          "value": "Yes! We've been asking for this since we started using Feathr. It's frustrating not to have this visibility.",
+          "created": "2026-01-10T14:22:00Z",
+          "author": {
+            "name": "Sarah Lee",
+            "email": "sarah@communityfirst.org"
+          }
+        },
+        {
+          "id": "comment_791",
+          "value": "Would love to see this in the dashboard AND be able to export it. Both are important for different workflows.",
+          "created": "2025-12-05T16:45:00Z",
+          "author": {
+            "name": "Michael Chen",
+            "email": "michael@equalityforward.org"
+          }
+        }
+      ]
+    },
+    {
+      "id": "post_2345",
+      "title": "Lookalike audience attribution in Pixl Plus reports",
+      "details": "When we run lookalike audience campaigns through Pixl Plus, we can't see which conversions came from the lookalike audiences vs. other targeting methods. Need attribution reporting that shows performance by audience type (retargeting, lookalike, prospecting, etc.).",
+      "score": 38,
+      "votes": 10,
+      "commentCount": 4,
+      "status": "open",
+      "created": "2025-12-01T13:20:00Z",
+      "updated": "2026-01-08T11:30:00Z",
+      "author": {
+        "name": "David Martinez",
+        "email": "david@healthaccess.org"
+      },
+      "board": {
+        "name": "Feature Requests"
+      },
+      "comments": [
+        {
+          "id": "comment_800",
+          "value": "We're spending significant budget on lookalike campaigns and can't measure if they're actually working. This is a major gap.",
+          "created": "2025-12-10T10:00:00Z",
+          "author": {
+            "name": "Lisa Thompson",
+            "email": "lisa@youthservices.org"
+          }
+        },
+        {
+          "id": "comment_801",
+          "value": "Our executive team is asking for ROI on our lookalike spend and we literally can't provide it. Need this ASAP.",
+          "created": "2026-01-08T11:30:00Z",
+          "author": {
+            "name": "David Martinez",
+            "email": "david@healthaccess.org"
+          }
+        }
+      ]
+    },
+    {
+      "id": "post_3456",
+      "title": "Browser language auto-translation for donation forms",
+      "details": "Our donor base is international and we need donation forms to automatically detect browser language and display in the donor's preferred language. Currently we have to create separate forms for each language which is a maintenance nightmare.\n\nWould love to see integration with Google Translate or similar service where we provide translations once and the form automatically displays in the right language based on browser settings.",
+      "score": 32,
+      "votes": 20,
+      "commentCount": 9,
+      "status": "open",
+      "created": "2025-10-20T09:45:00Z",
+      "updated": "2026-01-15T16:20:00Z",
+      "author": {
+        "name": "Sophie Dubois",
+        "email": "sophie@globalwellness.org"
+      },
+      "board": {
+        "name": "Fundraising Feedback"
+      },
+      "comments": [
+        {
+          "id": "comment_850",
+          "value": "This would be huge for us. We operate in 8 countries and maintaining 8 versions of every form is killing our team.",
+          "created": "2025-11-05T14:30:00Z",
+          "author": {
+            "name": "Carlos Rodriguez",
+            "email": "carlos@educacionmundial.org"
+          }
+        },
+        {
+          "id": "comment_851",
+          "value": "Givebutter and Donorbox both have this feature. We're considering switching if Feathr doesn't add it soon.",
+          "created": "2026-01-15T16:20:00Z",
+          "author": {
+            "name": "Yuki Tanaka",
+            "email": "yuki@asiarelieffund.org"
+          }
+        }
+      ]
+    },
+    {
+      "id": "post_4567",
+      "title": "Granular content editor role permissions",
+      "details": "We need a role that can edit email content and landing pages but cannot view or manage audiences, person records, or reports. Currently the Content Editor role has too many permissions for our security requirements.\n\nUse case: We have contractors who help write email copy but shouldn't have access to our donor database or financial reports. Right now we either give them too much access or make them work outside the system.",
+      "score": 35,
+      "votes": 12,
+      "commentCount": 6,
+      "status": "under review",
+      "created": "2025-11-28T11:15:00Z",
+      "updated": "2026-01-12T09:40:00Z",
+      "author": {
+        "name": "Rachel Green",
+        "email": "rachel@privacymatters.org"
+      },
+      "board": {
+        "name": "Feature Requests"
+      },
+      "comments": [
+        {
+          "id": "comment_900",
+          "value": "This is a security issue for us. We can't give contractors access to donor data but we need them to write email copy. Huge blocker.",
+          "created": "2025-12-02T15:20:00Z",
+          "author": {
+            "name": "Tom Wilson",
+            "email": "tom@securegiving.org"
+          }
+        },
+        {
+          "id": "comment_901",
+          "value": "All of our enterprise customers ask about this during sales calls. It's a common requirement for larger organizations with compliance needs.",
+          "created": "2026-01-12T09:40:00Z",
+          "author": {
+            "name": "Alex Johnson",
+            "email": "alex@feathr.co"
+          }
+        }
+      ]
+    },
+    {
+      "id": "post_5678",
+      "title": "Email template library with folders and tags",
+      "details": "We have 50+ email templates and it's impossible to find the right one. Need a template library with:\n- Folders/categories\n- Tags for easy filtering\n- Search by template name or content\n- Ability to mark favorites\n\nRight now everything is in one flat list and it takes forever to find what we need.",
+      "score": 28,
+      "votes": 22,
+      "commentCount": 5,
+      "status": "open",
+      "created": "2025-10-25T14:00:00Z",
+      "updated": "2026-01-05T10:15:00Z",
+      "author": {
+        "name": "Emily Davis",
+        "email": "emily@nonprofitpro.org"
+      },
+      "board": {
+        "name": "Feature Requests"
+      }
+    }
+  ]
+}
