@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-**Renamed PRD Skill → Scope Skill**
+**Renamed/Refactored PRD Skill → Scope Skill**
 - The `/prd` skill is now `/scope` with a unified workflow for all issue types
 - Supports 9 issue types: Epic, Feature, Brief, QA Testing, Frontend Component Update, Bug, Discovery, Task, Changelog Entry
 - Workflows scale with complexity: full 5-phase for Epics/Features, 4-phase for Briefs, 3-phase for medium issues, grouped form-fill for simple issues
@@ -34,6 +34,12 @@
 - Spec templates for success states, progress indicators, error handling
 - Confirmation patterns for destructive actions
 - Form validation and empty state definitions
+
+**Lightweight Update Script**
+- New `scripts/update.sh` for existing installations
+- Syncs skills, templates, and reference docs without touching CLAUDE.md
+- Automatically removes deprecated files (e.g., old `prd` skill)
+- Usage: `./scripts/update.sh /path/to/project`
 
 ### Template Changes
 
