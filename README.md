@@ -12,23 +12,24 @@ This toolkit integrates with [Claude Code](https://claude.ai/download) to provid
 
 | Skill | Command | Purpose | Time Savings |
 |-------|---------|---------|--------------|
-| **PRD Writing** | `/prd` | Guided 5-phase PRD workflow with quality checks | 2-3 hours → 30-60 min |
+| **Issue Scoping** | `/scope` | Template-based workflows for 9 issue types (Epic, Feature, Brief, Bug, Task, etc.) | 2-3 hours → 30-60 min (complex), 30 min → 5 min (simple) |
 | **Competitive Research** | `/research-competitors` | Automated competitor analysis with comparison matrices | 1-2 hours → 15-30 min |
 | **Feedback Analysis** | `/analyze-feedback` | Multi-source customer feedback synthesis | 1-2 hours → 10-20 min |
 | **Quality Assurance** | `/qa-prd` | Automated PRD quality checker | 30-45 min → 5-10 min |
 
-**Total time savings per PRD:** 4-6 hours → 1-2 hours (60-75% reduction)
+**Total time savings:** 60-75% reduction for complex issues, 80%+ for simple issues
 
 ---
 
 ## Key Features
 
-**PRD Writing (`/prd`):**
-- 5-phase guided workflow (Discovery → Research → Integration → Drafting → Finalization)
-- Automatic cross-feature integration prompts
-- Usability component specifications
-- Built-in quality checks
-- GitHub issue creation
+**Issue Scoping (`/scope`):**
+- Template-based routing for 9 issue types
+- Complex (Epic, Feature): 5-phase workflow with research and integration
+- Research-Focused (Brief): 4-phase workflow with customer feedback and competitive analysis
+- Medium (QA Testing, Frontend Component Update): 3-phase structured workflow
+- Simple (Bug, Discovery, Task, Changelog Entry): Grouped form-fill
+- Built-in quality checks and GitHub issue creation
 
 **Competitive Research (`/research-competitors`):**
 - 4-phase workflow (Scope → Research → Analysis → Deliverable)
@@ -120,9 +121,9 @@ After installation:
    claude
    ```
 
-2. **Try your first PRD**
+2. **Try your first issue**
    ```
-   /prd
+   /scope
    ```
 
 3. **Read the onboarding guide**
@@ -219,12 +220,13 @@ See [docs/MCP-SETUP.md](docs/MCP-SETUP.md) for setup instructions.
 
 ## Examples
 
-### Writing a PRD
+### Scoping an Issue
 
 ```
-You: /prd
-Claude: Let's write a PRD. What feature are you looking to scope?
-You: User authentication with SSO
+You: /scope
+Claude: What type of issue are you creating?
+       [Shows 9 options + "I'm not sure"]
+You: 2 (Feature)
 Claude: [Guides through 5-phase workflow]
        [Outputs complete PRD with quality checks]
 ```
@@ -271,7 +273,7 @@ Claude: Overall Score: 8.5/10 ✅ Ready for Design
 your-project/
 ├── .claude/
 │   └── skills/
-│       ├── prd/                          # PRD writing workflow
+│       ├── scope/                        # Issue scoping workflow (9 templates)
 │       ├── competitive-research/         # Competitor analysis
 │       ├── customer-feedback-analysis/   # Feedback synthesis
 │       └── requirement-qa/               # Quality checker

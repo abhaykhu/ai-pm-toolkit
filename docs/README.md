@@ -10,7 +10,7 @@ This directory contains a PM Toolkit for AI-powered product management work.
 
 **New to the toolkit?** Start with **[TOOLKIT-GUIDE.md](TOOLKIT-GUIDE.md)** for a comprehensive overview of tools, skills, and workflows.
 
-**Writing a PRD?** Run `/prd` in Claude Code to start the guided workflow.
+**Creating an issue?** Run `/scope` in Claude Code to start the guided workflow for any issue type.
 
 **Analyzing feedback?** Run `/analyze-feedback` to synthesize Canny, Zendesk, and Gong data.
 
@@ -30,6 +30,7 @@ docs/
 │   ├── team-directory.md       # Team members and GitHub usernames
 │   └── ui-patterns.md          # Common UI patterns
 ├── templates/                   # GitHub issue templates
+│   ├── brief.md
 │   ├── epic.md
 │   ├── feature.md
 │   ├── task.md
@@ -37,7 +38,7 @@ docs/
 │   ├── discovery.md
 │   ├── qa-testing.md
 │   ├── frontend-component-update.md
-│   └── product-brief.md
+│   └── changelog-entry.md
 ├── prds/                        # Example PRDs and active PRD work
 └── feedback-analysis/           # Feedback analysis reports
 ```
@@ -46,22 +47,23 @@ docs/
 
 ## Available Skills
 
-### `/prd` - PRD Writing Workflow
+### `/scope` - Issue Scoping Workflow
 
-**5-phase guided workflow for writing high-quality PRDs:**
+**Template-based workflows for 9 issue types:**
 
-1. **Discovery** - Clarify scope, choose template (Epic, Feature, Discovery)
-2. **Research** - Competitive analysis and codebase context (optional)
-3. **Cross-Feature Integration** - Systematic platform integration scoping
-4. **Drafting** - Generate PRD with quality checks and usability component specs
-5. **Finalization** - Iterate, save markdown, create GitHub issues
+| Category | Templates | Workflow |
+|----------|-----------|----------|
+| **Complex** | Epic, Feature | Full 5-phase workflow |
+| **Research-Focused** | Brief | 4-phase research workflow |
+| **Medium** | QA Testing, Frontend Component Update | 3-phase structured |
+| **Simple** | Bug, Discovery, Task, Changelog Entry | Grouped form-fill |
 
 **Outputs:**
-- PRD markdown in `prds/`
+- Markdown in appropriate location (`prds/` or `issues/`)
 - Optional GitHub issue with proper template
-- Quality validation report
+- Quality validation report (for complex issues)
 
-**See:** [TOOLKIT-GUIDE.md](TOOLKIT-GUIDE.md#prd---prd-writing-workflow) for detailed usage
+**See:** [TOOLKIT-GUIDE.md](TOOLKIT-GUIDE.md#scope---issue-scoping-workflow) for detailed usage
 
 ---
 
@@ -167,6 +169,7 @@ All templates are in **[templates/](templates/)** and automatically used by `/pr
 
 | Template | Use For | Key Sections |
 |----------|---------|--------------|
+| **[brief.md](templates/brief.md)** | VP-to-PM initiative handoff | Business context, research findings, high-level scope, success indicators |
 | **[epic.md](templates/epic.md)** | Large initiatives with multiple features | Problem, business context, features breakdown, success metrics |
 | **[feature.md](templates/feature.md)** | Specific functionality chunks | Problem, user stories, cross-feature integration, acceptance criteria |
 | **[task.md](templates/task.md)** | Individual units of dev work | Description, acceptance criteria, related issues |
@@ -174,9 +177,10 @@ All templates are in **[templates/](templates/)** and automatically used by `/pr
 | **[discovery.md](templates/discovery.md)** | Research and learning tasks | Research goals, questions to answer, deliverables |
 | **[qa-testing.md](templates/qa-testing.md)** | QA test scenarios | Test scenarios, prerequisites, expected outcomes |
 | **[frontend-component-update.md](templates/frontend-component-update.md)** | Component replacement work | Components to update, locations, migration strategy |
-| **[product-brief.md](templates/product-brief.md)** | Feature launch communications | What was built, why it matters, customer impact |
+| **[changelog-entry.md](templates/changelog-entry.md)** | External feature announcements | What was built, why it matters, customer impact |
 
 **Template Selection Logic:**
+- **Brief** - VP-to-PM handoff with business context and research (precedes Epic/Feature)
 - **Epic** - Contains multiple features, strategic initiative
 - **Feature** - Single functionality chunk, requires design
 - **Task** - Small dev work, no design needed
@@ -202,15 +206,15 @@ The toolkit integrates with external services via Model Context Protocol (MCP):
 
 ## Common Workflows
 
-### Write a PRD from Scratch
+### Create Any Issue
 
 ```
-/prd
+/scope
 ```
 
-Follow the 5-phase workflow. Time: 30-60 minutes for features, 1-2 hours for epics.
+Select template type, follow the appropriate workflow. Complex issues take longer, simple issues complete quickly.
 
-**See:** [TOOLKIT-GUIDE.md](TOOLKIT-GUIDE.md#writing-a-prd-from-scratch) for step-by-step guide.
+**See:** [TOOLKIT-GUIDE.md](TOOLKIT-GUIDE.md#scoping-an-issue) for step-by-step guide.
 
 ---
 

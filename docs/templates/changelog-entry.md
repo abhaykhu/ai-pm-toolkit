@@ -1,4 +1,4 @@
-# Product Brief Template
+# Changelog Entry Template
 
 ```markdown
 **Feature name:**

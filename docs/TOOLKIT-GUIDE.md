@@ -10,7 +10,7 @@ A comprehensive AI-powered toolkit for product management work at Feathr. This g
 
 The PM Toolkit integrates with Claude Code to provide:
 
-- **Structured PRD Writing** - Guided 5-phase workflow with quality checks
+- **Structured Scoping** - Template-based workflows for 9 issue types (from quick bugs to comprehensive PRDs)
 - **Customer Feedback Analysis** - Multi-source synthesis (Canny, Zendesk, Gong)
 - **Design Integration** - Direct Figma access and context
 - **GitHub Automation** - Template-based issue creation with quality validation
@@ -26,50 +26,60 @@ The PM Toolkit integrates with Claude Code to provide:
 2. **Open Feathr project** - `cd ~/feathr && claude`
 3. **You're ready!** - The toolkit is already configured in this repo
 
-### Your First PRD
+### Your First Issue
 
 ```
-/prd
+/scope
 ```
 
-Claude will guide you through 5 phases:
-1. **Discovery** - Clarify scope and choose template
-2. **Research** - Competitive analysis and codebase context (optional)
-3. **Cross-Feature Integration** - Platform integration scoping
-4. **Drafting** - Create PRD with quality checks
-5. **Finalization** - Iterate and save/publish
+Claude will present a template selection menu, then guide you through the appropriate workflow:
+- **Complex** (Epic, Feature, Brief) - Full 4-5 phase workflow with research
+- **Medium** (QA Testing, Frontend Component Update) - 3-phase structured workflow
+- **Simple** (Bug, Discovery, Task, Changelog Entry) - Quick grouped form-fill
 
 ---
 
 ## Available Skills
 
-### `/prd` - PRD Writing Workflow
+### `/scope` - Issue Scoping Workflow
 
 **When to use:**
-- Starting a new epic or feature
-- Documenting requirements for design
+- Creating any type of issue (Epic, Feature, Bug, Task, etc.)
 - Scoping initiatives for roadmap planning
+- Documenting requirements for design
+- Quick bug reports or task creation
 
 **What it does:**
-- Guides you through structured discovery
-- Runs competitive research (optional)
-- Prompts for cross-feature integration
+- Routes to appropriate workflow based on issue type
+- Supports 9 templates with tailored workflows
+- Runs competitive research and feedback analysis (for complex issues)
+- Prompts for cross-feature integration (for features/epics)
 - Applies quality checks automatically
-- Saves PRD markdown with metadata
+- Saves markdown with metadata
 - Can create GitHub issues
+
+**Template Workflows:**
+
+| Category | Templates | Workflow |
+|----------|-----------|----------|
+| **Complex** | Epic, Feature | Full 5-phase workflow |
+| **Research-Focused** | Brief | 4-phase research workflow |
+| **Medium** | QA Testing, Frontend Component Update | 3-phase structured |
+| **Simple** | Bug, Discovery, Task, Changelog Entry | Grouped form-fill |
 
 **Example:**
 ```
-You: /prd
-Claude: Let's write a PRD. What feature are you looking to scope?
-You: Recurring donations for our fundraising forms
+You: /scope
+Claude: What type of issue are you creating?
+       [Presents menu with 9 options + "I'm not sure"]
+You: 2 (Feature)
 Claude: [Guides through 5-phase workflow]
 ```
 
 **Output:**
-- PRD markdown file in `docs/prds/`
+- Markdown file in appropriate location
 - Optional GitHub issue with proper template
-- Quality validation report
+- Quality validation report (for complex issues)
 
 ---
 
@@ -284,41 +294,40 @@ Claude: [Uses get_metadata to show structure, then get_screenshot for key screen
 
 ## Core Workflows
 
-### Writing a PRD from Scratch
+### Scoping an Issue
 
 1. **Start the workflow**
    ```
-   /prd
+   /scope
    ```
 
-2. **Discovery Phase**
-   - Describe feature/initiative
-   - Clarify business goal
-   - Choose template (Epic, Feature, Discovery)
+2. **Template Selection (Phase 0)**
+   - Choose from 9 issue types
+   - Or select "I'm not sure" for guided decision tree
 
-3. **Research Phase (Optional)**
-   - Competitive analysis - Searches Givebutter, Donorbox, Classy, etc.
-   - Codebase context - Finds related features and patterns
-   - Review findings before proceeding
+3. **Workflow varies by complexity:**
 
-4. **Cross-Feature Integration**
-   - Claude prompts for each area: Person Records, Segmentation, Reporting, Billing, CRM, Campaign Goals, Other Touchpoints
-   - You provide context, Claude extrapolates details
-   - Applies workflow integration patterns
+**For Complex (Epic, Feature):**
+- Phase 1: Discovery - Describe initiative, clarify business goal
+- Phase 2: Research (Optional) - Competitive analysis, codebase context
+- Phase 3: Cross-Feature Integration - 7 integration areas with workflow patterns
+- Phase 4: Drafting - PRD with problem statement, user stories, usability specs
+- Phase 5: Finalization - Review, iterate, save/publish
 
-5. **Drafting**
-   - Claude generates PRD using appropriate template
-   - Problem statement crafted automatically
-   - User stories organized by workflow
-   - Usability components specified
-   - Quality checks applied
+**For Research-Focused (Brief):**
+- Phase 1: Context - Strategic rationale, customer pain points
+- Phase 2: Research - Customer feedback analysis, competitive landscape
+- Phase 3: Scope - Sub-features, success indicators
+- Phase 4: Drafting & Finalization
 
-6. **Finalization**
-   - Review and iterate
-   - Save markdown to `docs/prds/`
-   - Optionally create GitHub issue
+**For Medium (QA Testing, Frontend Component Update):**
+- Phase 1: Context - Feature link, overview, prerequisites
+- Phase 2: Details - Scenarios/locations, requirements
+- Phase 3: Draft & Finalize
 
-**Time estimate:** 30-60 minutes for a feature, 1-2 hours for an epic
+**For Simple (Bug, Discovery, Task, Changelog Entry):**
+- Grouped form-fill with related questions together
+- Quick review and save
 
 ---
 
@@ -525,6 +534,7 @@ All templates are in **[docs/templates/](templates/)**
 
 | Template | When to Use | Key Sections |
 |----------|-------------|--------------|
+| **brief.md** | VP-to-PM initiative handoff | Business context, research findings, high-level scope, success indicators |
 | **epic.md** | Large initiatives with multiple features | Problem, business context, features breakdown, success metrics |
 | **feature.md** | Specific functionality chunks | Problem, user stories, cross-feature integration, acceptance criteria |
 | **task.md** | Individual units of dev work | Description, acceptance criteria, related issues |
@@ -532,9 +542,10 @@ All templates are in **[docs/templates/](templates/)**
 | **discovery.md** | Research and learning tasks | Research goals, questions to answer, deliverables |
 | **qa-testing.md** | QA test scenarios | Test scenarios, prerequisites, expected outcomes |
 | **frontend-component-update.md** | Component replacement work | Components to update, locations, migration strategy |
-| **product-brief.md** | Feature launch communications | What was built, why it matters, customer impact |
+| **changelog-entry.md** | External feature announcements | What was built, why it matters, customer impact |
 
 **Template Selection Logic:**
+- **Brief** - VP-to-PM handoff with business context and research (precedes Epic/Feature)
 - **Epic** - Contains multiple features, strategic initiative
 - **Feature** - Single functionality chunk, requires design
 - **Task** - Small dev work, no design needed
