@@ -1,0 +1,54 @@
+# Release Notes
+
+## v1.1.0 - 2026-01-28
+
+### Major Changes
+
+**Renamed PRD Skill → Scope Skill**
+- The `/prd` skill is now `/scope` with a unified workflow for all issue types
+- Supports 9 issue types: Epic, Feature, Brief, QA Testing, Frontend Component Update, Bug, Discovery, Task, Changelog Entry
+- Workflows scale with complexity: full 5-phase for Epics/Features, 4-phase for Briefs, 3-phase for medium issues, grouped form-fill for simple issues
+
+### New Features
+
+**New Brief Template**
+- High-level initiative summary format for early-stage scoping
+- 4-phase research-focused workflow: Context → Research → Scope → Draft
+- Integrates with `/analyze-feedback` and `/research-competitors` skills
+- Captures business context, customer context, research findings, and success indicators
+
+**Enhanced Workflow Routing**
+- Phase 0 template selection with "I'm not sure" decision tree
+- Intelligent routing based on issue complexity
+- Clear guidance for choosing between 9 issue types
+
+**Workflow Integration Patterns**
+- Auto-generation: Automatic segment creation from feature data
+- Attribution visibility: Upstream sources + downstream outcomes tracking
+- Bi-directional sync: CRM data flows both directions
+- Full shortcuts: Pre-configured workflows for common actions
+- Next-step guidance: Always-present recommended actions
+
+**Usability Component Integration**
+- PRDs now reference `usability-components.md` for UI patterns
+- Spec templates for success states, progress indicators, error handling
+- Confirmation patterns for destructive actions
+- Form validation and empty state definitions
+
+### Template Changes
+
+| Old | New |
+|-----|-----|
+| `product-brief.md` | `changelog-entry.md` |
+| — | `brief.md` (new) |
+
+### Breaking Changes
+
+- Skill renamed from `/prd` to `/scope`
+- Template `product-brief.md` renamed to `changelog-entry.md` (different purpose)
+
+---
+
+## v1.0.0 - 2026-01-26
+
+Initial release of AI PM Toolkit.
