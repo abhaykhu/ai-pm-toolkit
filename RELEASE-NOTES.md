@@ -1,5 +1,20 @@
 # Release Notes
 
+## v1.1.2 - 2026-01-29
+
+### New Features
+
+**Internal Tooling Template & Workflow**
+- Added `internal-tooling.md` template for internal tools, admin features, and developer utilities
+- Scope skill now routes internal tooling requests to streamlined 3-phase workflow
+- Template focuses on technical specs, admin controls, and operational considerations
+
+### Bug Fixes
+
+- Updated install.sh to use `/scope` instead of deprecated `/prd` in generated CLAUDE.md and instructions
+
+---
+
 ## v1.1.1 - 2026-01-28
 
 ### New Features
