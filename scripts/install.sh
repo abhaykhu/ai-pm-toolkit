@@ -499,7 +499,7 @@ The PM Toolkit provides AI-powered tools for product management work. See **[doc
 
 | Skill | Command | When to Use |
 |-------|---------|-------------|
-| PRD Writing | \`/prd\` | Scoping features, writing requirements, creating GitHub issues |
+| Scoping | \`/scope\` | Scoping features, writing requirements, creating GitHub issues |
 | Competitive Research | \`/research-competitors\` | Research competitors, UX patterns, feature gaps |
 | Feedback Analysis | \`/analyze-feedback\` | Research customer feedback, understand pain points, validate PRD assumptions |
 | Quality Assurance | \`/qa-prd\` | Review PRD quality before design handoff |
@@ -524,9 +524,9 @@ All GitHub issue templates are in **[docs/templates/](docs/templates/)**
 
 When the user's request matches these patterns, **proactively invoke the corresponding skill**:
 
-### PRD Writing
+### Scoping
 
-**Auto-invoke \`/prd\` when user says:**
+**Auto-invoke \`/scope\` when user says:**
 - "Help me scope [feature]"
 - "Write a PRD for [feature]"
 - "Document requirements for [feature]"
@@ -1133,7 +1133,7 @@ echo "   cd $TARGET_DIR"
 echo "   claude"
 echo ""
 echo "2. Try your first skill:"
-echo "   /prd"
+echo "   /scope"
 echo ""
 echo -e "${YELLOW}Optional: Review and customize generated files${NC}"
 echo "   - $TARGET_DIR/CLAUDE.md (company context, capabilities, terminology)"
