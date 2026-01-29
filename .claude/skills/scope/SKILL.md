@@ -14,7 +14,7 @@ All workflows start with **Phase 0: Template Selection**, then branch based on t
 |----------|-----------|----------|
 | **Complex** | Epic, Feature | Full 5-phase workflow |
 | **Research-Focused** | Brief | 4-phase research workflow |
-| **Medium** | QA Testing, Frontend Component Update | 3-phase structured workflow |
+| **Medium** | QA Testing, Frontend Component Update, Internal Tooling | 3-phase structured workflow |
 | **Simple** | Bug, Discovery, Task, Changelog Entry | Grouped form-fill |
 
 ---
@@ -36,19 +36,20 @@ What type of issue are you creating?
 **Medium** (structured prompting):
 4. QA Testing - Test scenarios for a feature
 5. Frontend Component Update - Component replacement work
+6. Internal Tooling - Internal tools, scripts, or automation
 
 **Simple** (quick form-fill):
-6. Bug - Something broken that needs fixing
-7. Discovery - Research/exploration task
-8. Task - Individual unit of dev work
-9. Changelog Entry - External feature announcement
+7. Bug - Something broken that needs fixing
+8. Discovery - Research/exploration task
+9. Task - Individual unit of dev work
+10. Changelog Entry - External feature announcement
 
-10. I'm not sure yet - help me figure it out
+11. I'm not sure yet - help me figure it out
 ```
 
 ## "I'm Not Sure" Decision Tree
 
-If user selects option 10, guide them through these questions:
+If user selects option 11, guide them through these questions:
 
 1. **"Is something broken that needs fixing?"**
    - Yes → **Bug**
@@ -59,9 +60,10 @@ If user selects option 10, guide them through these questions:
    - Ready to build → Continue
 
 3. **"Does this need design work?"**
-   - No → Ask: "Is this QA testing, a component update, or general dev work?"
+   - No → Ask: "Is this QA testing, a component update, internal tooling, or general dev work?"
      - QA testing → **QA Testing**
      - Component update → **Frontend Component Update**
+     - Internal tooling/automation → **Internal Tooling**
      - General dev work → **Task**
    - Yes → Continue
 
@@ -535,7 +537,7 @@ Populate:
 
 ---
 
-# Branch C: Medium (QA Testing, Frontend Component Update)
+# Branch C: Medium (QA Testing, Frontend Component Update, Internal Tooling)
 
 3-phase structured workflow for medium-complexity issues.
 
@@ -605,6 +607,75 @@ Generate Frontend Component Update issue using template.
 **Checkpoint:** Present draft and ask:
 - "Is the scope clearly defined?"
 - "Any locations or behaviors to add?"
+- "Ready to save?"
+
+→ Proceed to **Shared: Save & Publish** section.
+
+---
+
+## Internal Tooling
+
+**Template:** `docs/templates/internal-tooling.md`
+
+### Phase 1: Context & Problem
+
+Ask these questions together:
+1. "What tool or automation are you requesting? (one-line summary)"
+2. "Is this a new tool, enhancement to an existing tool, or automation of a manual process?"
+3. "What problem does this solve? Include:
+   - Who is affected (team/role)
+   - Current workflow and its problems
+   - How often this pain occurs (daily, weekly, per release, etc.)"
+
+### Phase 2: Impact & Requirements
+
+**Impact:**
+Ask: "What impact will this have? Quantify where possible."
+- Time savings (hours per week/month)
+- Error reduction
+- Risk mitigation
+- Developer experience improvement
+- Operational efficiency
+- Cost savings
+
+Capture as bullet list.
+
+**User Stories:**
+Guide user through user stories using the standard format:
+
+For each story, ask:
+1. "Who is the user and what do they want to accomplish?"
+2. "What user-facing requirements does this have?" (things the user sees/does)
+3. "What system requirements does this have?" (backend, validation, processing)
+
+Use `<details>` collapsible format:
+- Standard stories: `As a [role], I want to [action] so that [benefit]`
+- System-only stories: Prefix with `⚙️ [SYS]`
+
+After each story: "Add another story, or done?"
+
+**Technical Context:**
+Ask: "What systems, APIs, or infrastructure does this interact with?"
+
+### Phase 3: Draft & Finalize
+
+Generate Internal Tooling issue using template.
+
+Populate:
+- Summary (from Phase 1)
+- Request Type (from Phase 1)
+- Problem Statement (from Phase 1)
+- Impact (from Phase 2)
+- User Stories (from Phase 2)
+- Technical Context (from Phase 2)
+- Proposed Approach (ask: "Do you have ideas on implementation? Engineering may propose alternatives.")
+- Success Criteria (ask: "How will we know this is working? List measurable outcomes.")
+- Stakeholders (ask: "Who is the requester? Who should own engineering? Any other affected teams?")
+
+**Checkpoint:** Present draft and ask:
+- "Does this capture the tooling request accurately?"
+- "Is the business case clear?"
+- "Any requirements or context to add?"
 - "Ready to save?"
 
 → Proceed to **Shared: Save & Publish** section.
@@ -717,7 +788,7 @@ After any workflow completes, offer these options:
 2. Generate file with metadata header:
    ```yaml
    ---
-   type: [epic|feature|brief|bug|discovery|task|qa-testing|frontend-component-update|changelog-entry]
+   type: [epic|feature|brief|bug|discovery|task|qa-testing|frontend-component-update|internal-tooling|changelog-entry]
    title: [Issue Title]
    created: [YYYY-MM-DD]
    github_repo:
