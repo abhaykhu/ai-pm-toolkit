@@ -1,5 +1,25 @@
 # Release Notes
 
+## v1.1.1 - 2026-01-28
+
+### New Features
+
+**Feathr-Specific Reference Documentation**
+- Added `feathr-specific/` directory with pre-configured Feathr content
+- FeathrEgg easter egg now installs comprehensive Feathr reference docs:
+  - `usability-components.md` (2,100+ lines) - Complete UI component usage guide for Mantine v7
+  - `sdlc-overview.md` - Feathr's 14-phase SDLC with PM role mapping
+  - `team-directory.md` - Full team roster with pod structure and assignment guidelines
+  - `ui-patterns.md` - Feathr-specific UI decision trees and patterns
+- Feathr installations skip generic customization (sed replacements) to preserve Feathr-specific content
+
+### Internal
+
+- Updated install script to conditionally copy Feathr-specific docs when FeathrEgg mode is active
+- Refactored reference doc customization to only run for non-Feathr installations
+
+---
+
 ## v1.1.0 - 2026-01-28
 
 ### Major Changes

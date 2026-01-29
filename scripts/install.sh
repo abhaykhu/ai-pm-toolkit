@@ -410,6 +410,16 @@ if [ -f "$TOOLKIT_DIR/docs/MCP-SETUP.md" ]; then
     cp "$TOOLKIT_DIR/docs/MCP-SETUP.md" "$TARGET_DIR/docs/"
 fi
 
+# Copy Feathr-specific reference docs if in Feathr mode
+if [ "$FEATHR_MODE" = "yes" ]; then
+    echo -e "${YELLOW}Copying Feathr-specific reference documentation...${NC}"
+    cp "$TOOLKIT_DIR/feathr-specific/reference/usability-components.md" "$TARGET_DIR/docs/reference/"
+    cp "$TOOLKIT_DIR/feathr-specific/reference/sdlc-overview.md" "$TARGET_DIR/docs/reference/"
+    cp "$TOOLKIT_DIR/feathr-specific/reference/team-directory.md" "$TARGET_DIR/docs/reference/"
+    cp "$TOOLKIT_DIR/feathr-specific/reference/ui-patterns.md" "$TARGET_DIR/docs/reference/"
+    echo -e "${GREEN}✓ Feathr-specific docs copied${NC}"
+fi
+
 echo -e "${GREEN}✓ Files copied${NC}"
 echo ""
 
@@ -694,6 +704,16 @@ This is Feathr's multi-project development directory containing three main codeb
 | **anhinga/** | Backend API | Flask, MongoDB, Docker | https://local.feathr.app:8000 |
 
 Each project has its own `CLAUDE.md` with detailed commands and architecture. Refer to those for project-specific guidance.
+
+---
+
+## Reference Documentation (Extended)
+
+In addition to the standard reference docs, Feathr includes:
+
+- **[usability-components.md](docs/reference/usability-components.md)** - Comprehensive UI component usage rules for Feathr's Mantine v7 components (success modals, progress indicators, error handling, form components, navigation, onboarding, data display, mobile patterns)
+
+This document is critical for writing PRDs with proper usability specifications.
 
 ---
 
@@ -1021,48 +1041,54 @@ fi
 
 echo ""
 
-# Update SDLC overview with company context
-echo -e "${YELLOW}Updating SDLC overview...${NC}"
-sed -i.bak "s/PLACEHOLDER_DATE/$(date +%Y-%m-%d)/g" "$TARGET_DIR/docs/reference/sdlc-overview.md"
-sed -i.bak "s/your company's/$COMPANY_NAME's/g" "$TARGET_DIR/docs/reference/sdlc-overview.md"
-sed -i.bak "s/TODO: Customize this section with your company's actual process/Customize this section with $COMPANY_NAME's actual process/g" "$TARGET_DIR/docs/reference/sdlc-overview.md"
-rm -f "$TARGET_DIR/docs/reference/sdlc-overview.md.bak"
-echo -e "${GREEN}✓ SDLC overview updated${NC}"
+# Only customize reference docs for non-Feathr installations
+# Feathr-specific docs are already properly configured
+if [ "$FEATHR_MODE" != "yes" ]; then
+    # Update SDLC overview with company context
+    echo -e "${YELLOW}Updating SDLC overview...${NC}"
+    sed -i.bak "s/PLACEHOLDER_DATE/$(date +%Y-%m-%d)/g" "$TARGET_DIR/docs/reference/sdlc-overview.md"
+    sed -i.bak "s/your company's/$COMPANY_NAME's/g" "$TARGET_DIR/docs/reference/sdlc-overview.md"
+    sed -i.bak "s/TODO: Customize this section with your company's actual process/Customize this section with $COMPANY_NAME's actual process/g" "$TARGET_DIR/docs/reference/sdlc-overview.md"
+    rm -f "$TARGET_DIR/docs/reference/sdlc-overview.md.bak"
+    echo -e "${GREEN}✓ SDLC overview updated${NC}"
 
-# Update UI patterns with company context
-echo -e "${YELLOW}Updating UI patterns guide...${NC}"
-sed -i.bak "s/PLACEHOLDER_DATE/$(date +%Y-%m-%d)/g" "$TARGET_DIR/docs/reference/ui-patterns.md"
-sed -i.bak "s/your product's/$COMPANY_NAME's/g" "$TARGET_DIR/docs/reference/ui-patterns.md"
-rm -f "$TARGET_DIR/docs/reference/ui-patterns.md.bak"
-echo -e "${GREEN}✓ UI patterns updated${NC}"
+    # Update UI patterns with company context
+    echo -e "${YELLOW}Updating UI patterns guide...${NC}"
+    sed -i.bak "s/PLACEHOLDER_DATE/$(date +%Y-%m-%d)/g" "$TARGET_DIR/docs/reference/ui-patterns.md"
+    sed -i.bak "s/your product's/$COMPANY_NAME's/g" "$TARGET_DIR/docs/reference/ui-patterns.md"
+    rm -f "$TARGET_DIR/docs/reference/ui-patterns.md.bak"
+    echo -e "${GREEN}✓ UI patterns updated${NC}"
 
-# Update prd-quality-guide with company context
-echo -e "${YELLOW}Updating PRD quality guide...${NC}"
-# Replace any Feathr-specific references with generic or company name
-sed -i.bak "s/Feathr/$PRODUCT_NAME/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
-sed -i.bak "s/$PRODUCT_NAME's/$COMPANY_NAME's/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
-# Update customers reference if present
-sed -i.bak "s/nonprofits/$TARGET_CUSTOMERS/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
-sed -i.bak "s/donors/$TARGET_CUSTOMERS/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
-sed -i.bak "s/Fundraising managers/[User role] at $TARGET_CUSTOMERS/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
-sed -i.bak "s/recurring donation/[example feature]/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
-sed -i.bak "s/Stripe subscription data/[external system data]/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
-sed -i.bak "s/Salesforce NPSP or RE NXT/[your CRM system]/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
-sed -i.bak "s/form builder/[feature context]/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
-rm -f "$TARGET_DIR/docs/reference/prd-quality-guide.md.bak"
-echo -e "${GREEN}✓ PRD quality guide updated${NC}"
+    # Update prd-quality-guide with company context
+    echo -e "${YELLOW}Updating PRD quality guide...${NC}"
+    # Replace any Feathr-specific references with generic or company name
+    sed -i.bak "s/Feathr/$PRODUCT_NAME/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
+    sed -i.bak "s/$PRODUCT_NAME's/$COMPANY_NAME's/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
+    # Update customers reference if present
+    sed -i.bak "s/nonprofits/$TARGET_CUSTOMERS/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
+    sed -i.bak "s/donors/$TARGET_CUSTOMERS/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
+    sed -i.bak "s/Fundraising managers/[User role] at $TARGET_CUSTOMERS/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
+    sed -i.bak "s/recurring donation/[example feature]/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
+    sed -i.bak "s/Stripe subscription data/[external system data]/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
+    sed -i.bak "s/Salesforce NPSP or RE NXT/[your CRM system]/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
+    sed -i.bak "s/form builder/[feature context]/g" "$TARGET_DIR/docs/reference/prd-quality-guide.md"
+    rm -f "$TARGET_DIR/docs/reference/prd-quality-guide.md.bak"
+    echo -e "${GREEN}✓ PRD quality guide updated${NC}"
 
-# Update workflow-integration with company context
-echo -e "${YELLOW}Updating workflow integration guide...${NC}"
-sed -i.bak "s/Feathr/$PRODUCT_NAME/g" "$TARGET_DIR/docs/reference/workflow-integration.md"
-sed -i.bak "s/$PRODUCT_NAME's/$COMPANY_NAME's/g" "$TARGET_DIR/docs/reference/workflow-integration.md"
-sed -i.bak "s/nonprofits/$TARGET_CUSTOMERS/g" "$TARGET_DIR/docs/reference/workflow-integration.md"
-sed -i.bak "s/Donation data/Customer data/g" "$TARGET_DIR/docs/reference/workflow-integration.md"
-sed -i.bak "s/donation/transaction/g" "$TARGET_DIR/docs/reference/workflow-integration.md"
-sed -i.bak "s/donor/customer/g" "$TARGET_DIR/docs/reference/workflow-integration.md"
-sed -i.bak "s/fundraising + communications platform/$VALUE_PROP/g" "$TARGET_DIR/docs/reference/workflow-integration.md"
-rm -f "$TARGET_DIR/docs/reference/workflow-integration.md.bak"
-echo -e "${GREEN}✓ Workflow integration updated${NC}"
+    # Update workflow-integration with company context
+    echo -e "${YELLOW}Updating workflow integration guide...${NC}"
+    sed -i.bak "s/Feathr/$PRODUCT_NAME/g" "$TARGET_DIR/docs/reference/workflow-integration.md"
+    sed -i.bak "s/$PRODUCT_NAME's/$COMPANY_NAME's/g" "$TARGET_DIR/docs/reference/workflow-integration.md"
+    sed -i.bak "s/nonprofits/$TARGET_CUSTOMERS/g" "$TARGET_DIR/docs/reference/workflow-integration.md"
+    sed -i.bak "s/Donation data/Customer data/g" "$TARGET_DIR/docs/reference/workflow-integration.md"
+    sed -i.bak "s/donation/transaction/g" "$TARGET_DIR/docs/reference/workflow-integration.md"
+    sed -i.bak "s/donor/customer/g" "$TARGET_DIR/docs/reference/workflow-integration.md"
+    sed -i.bak "s/fundraising + communications platform/$VALUE_PROP/g" "$TARGET_DIR/docs/reference/workflow-integration.md"
+    rm -f "$TARGET_DIR/docs/reference/workflow-integration.md.bak"
+    echo -e "${GREEN}✓ Workflow integration updated${NC}"
+else
+    echo -e "${GREEN}✓ Using Feathr-specific reference documentation${NC}"
+fi
 
 echo ""
 echo -e "${BLUE}═══════════════════════════════════════════════════${NC}"
