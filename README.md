@@ -40,7 +40,7 @@ This toolkit integrates with [Claude Code](https://claude.ai/download) to provid
 - Multiple output formats (PRD section, presentation, detailed report)
 
 **Feedback Analysis (`/analyze-feedback`):**
-- Multi-source synthesis (Canny, Zendesk, Gong via MCP tools)
+- Multi-source synthesis (Canny, Zendesk, Gong, Planhat via MCP tools)
 - Configurable time ranges
 - Product area filtering
 - Quantified customer demand
@@ -80,7 +80,7 @@ The installer will:
 1. Prompt for company information (name, product, repositories)
 2. Prompt for team members
 3. Prompt for product details (capabilities, pricing, terminology)
-4. Optionally configure MCP tools (Canny, Zendesk, Gong)
+4. Optionally configure MCP tools (Canny, Zendesk, Gong, Planhat)
 5. Copy skills to your project's `.claude/skills/` directory
 6. Copy documentation to your project's `docs/` directory
 7. Generate customized `CLAUDE.md` with all your context
@@ -106,7 +106,7 @@ If you prefer manual installation:
    - Update company-specific terminology and standards
 
 4. **Configure MCP tools** (optional but recommended)
-   - See [docs/MCP-SETUP.md](docs/MCP-SETUP.md) for Canny, Zendesk, Gong integration
+   - See [docs/MCP-SETUP.md](docs/MCP-SETUP.md) for Canny, Zendesk, Gong, Planhat integration
    - Installer prompts for MCP setup during installation
 
 ---
@@ -180,7 +180,7 @@ The installer prompts for and populates:
 - Platform capabilities (key features)
 - Pricing tiers (optional)
 - Company-specific terminology (optional)
-- MCP tool configuration (Canny, Zendesk, Gong)
+- MCP tool configuration (Canny, Zendesk, Gong, Planhat)
 
 ### After Installation
 
@@ -213,6 +213,7 @@ The toolkit can integrate with external tools via Model Context Protocol (MCP):
 - **Canny** - Feature requests, customer feedback, roadmap prioritization
 - **Zendesk** - Support tickets, pain point analysis
 - **Gong** - Customer call transcripts, insights
+- **Planhat** - Customer success data, health scores, CSM conversations
 
 See [docs/MCP-SETUP.md](docs/MCP-SETUP.md) for setup instructions.
 
@@ -245,7 +246,7 @@ Claude: [4-phase workflow: Scope → Research → Analysis → Deliverable]
 You: /analyze-feedback
 Claude: What time frame should I analyze?
 You: Last 90 days, focus on authentication features
-Claude: [Synthesizes Canny, Zendesk, Gong data]
+Claude: [Synthesizes Canny, Zendesk, Gong, Planhat data]
         [Outputs prioritized feature requests]
 ```
 

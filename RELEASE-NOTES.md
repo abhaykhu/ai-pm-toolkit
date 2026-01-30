@@ -1,5 +1,23 @@
 # Release Notes
 
+## v1.1.3 - 2026-01-29
+
+### New Features
+
+**Planhat Integration for Customer Feedback Analysis**
+- Added Planhat as fourth customer feedback data source alongside Canny, Zendesk, and Gong
+- Planhat MCP tools: `get_model_actions`, `get_model_action_parameters`, `perform_model_action`
+  - Flexible API allowing access to Companies, Conversations, Activities, and other models
+  - Bearer token authentication via `https://api.planhat.com/v1/mcp`
+- Health score integration: Low health scores boost urgency prioritization
+- ARR-weighted prioritization: Optionally weight feedback by customer revenue
+- CSM conversation analysis: Extract feature requests from customer success notes
+- Updated installer to prompt for Planhat API token during setup
+- Updated MCP-SETUP.md with Planhat configuration instructions
+- Updated all documentation to reference Planhat as feedback source
+
+---
+
 ## v1.1.2 - 2026-01-29
 
 ### New Features

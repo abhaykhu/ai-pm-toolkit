@@ -11,7 +11,7 @@ A comprehensive AI-powered toolkit for product management work at Feathr. This g
 The PM Toolkit integrates with Claude Code to provide:
 
 - **Structured Scoping** - Template-based workflows for 9 issue types (from quick bugs to comprehensive PRDs)
-- **Customer Feedback Analysis** - Multi-source synthesis (Canny, Zendesk, Gong)
+- **Customer Feedback Analysis** - Multi-source synthesis (Canny, Zendesk, Gong, Planhat)
 - **Design Integration** - Direct Figma access and context
 - **GitHub Automation** - Template-based issue creation with quality validation
 - **Codebase Intelligence** - Understand existing features and patterns
@@ -93,7 +93,7 @@ Claude: [Guides through 5-phase workflow]
 - Identifying support trends
 
 **What it does:**
-- Fetches data from Canny, Zendesk, Gong
+- Fetches data from Canny, Zendesk, Gong, Planhat
 - Synthesizes feedback by theme
 - Quantifies customer demand
 - Identifies urgent issues

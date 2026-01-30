@@ -1,6 +1,6 @@
 # MCP Tool Setup Guide
 
-**Model Context Protocol (MCP)** enables Claude Code to access external tools like Canny, Zendesk, and Gong. This guide walks through setting up each integration.
+**Model Context Protocol (MCP)** enables Claude Code to access external tools like Canny, Zendesk, Gong, and Planhat. This guide walks through setting up each integration.
 
 ---
 
@@ -10,6 +10,7 @@ The **Customer Feedback Analysis** skill (`/analyze-feedback`) needs access to y
 - Canny (feature requests, user feedback)
 - Zendesk (support tickets, customer issues)
 - Gong (call transcripts, customer conversations)
+- Planhat (customer success data, health scores, conversations)
 
 **Time required:** 5-10 minutes per tool
 
@@ -207,9 +208,87 @@ If configured correctly, Claude will show recent calls.
 
 ---
 
-## All Three Together
+## Tool 4: Planhat Setup
 
-If you're setting up all three, your `~/.config/claude/mcp.json` should look like:
+**What is Planhat?** Customer success platform for managing customer relationships, health scores, usage data, and conversations.
+
+**What you'll get:** Access to customer health data, usage metrics, conversation history, and customer success insights via three flexible tools that work with any Planhat data model.
+
+### Step 1: Get Your Planhat API Token
+
+1. **Log into Planhat** at https://app.planhat.com
+2. **Navigate to App Center** (from the main menu)
+3. **Create a Private App:**
+   - Click "+ New app"
+   - Click "+ Private app"
+   - Give it a name: "Claude Code MCP"
+   - Set permissions based on what data you need access to (Companies, Conversations, Users, etc.)
+4. **Generate API Token:**
+   - Click "Generate new token"
+   - **Copy the token immediately** (you'll only see this once!)
+
+### Step 2: Configure MCP Server
+
+Edit `~/.config/claude/mcp.json` (or `~/Library/Application Support/Claude/claude_desktop_config.json` for Claude Desktop):
+
+```json
+{
+  "mcpServers": {
+    "planhat": {
+      "url": "https://api.planhat.com/v1/mcp",
+      "headers": {
+        "Authorization": "Bearer your-access-token"
+      }
+    }
+  }
+}
+```
+
+Replace `your-access-token` with the token you generated in Step 1.
+
+**Note:** For demo environments, use `https://api.planhatdemo.com/v1/mcp` instead.
+
+### Step 3: Restart and Verify
+
+1. Restart Claude Code (or Claude Desktop)
+2. For Claude Desktop: Click "Reload MCP Configuration" in the developer tab
+3. Verify the MCP icon appears in the bottom right of the chat input
+4. Click the icon to see Planhat listed as an available server
+
+### Available Tools
+
+Planhat's MCP server provides three flexible tools:
+
+| Tool | Purpose |
+|------|---------|
+| `get_model_actions` | Discover available Planhat data models and supported operations |
+| `get_model_action_parameters` | Get parameter schemas for specific model-operation combinations |
+| `perform_model_action` | Execute CRUD operations on Planhat data |
+
+### Step 4: Test the Connection
+
+In Claude Code, try:
+```
+Use Planhat to list companies
+```
+
+Claude will use `get_model_actions` to discover available models, then `perform_model_action` to fetch data.
+
+### Troubleshooting
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| 401 Unauthorized | Missing or invalid token | Check Authorization header, ensure token is active |
+| 403 Forbidden | Insufficient permissions | Update app permissions in App Center |
+| 404 Not Found | Invalid model or operation | Use `get_model_actions` to confirm valid options |
+| 400 Bad Request | Missing/invalid parameters | Check `get_model_action_parameters` for requirements |
+| 429 Too Many Requests | Rate limit hit | Retry with delay, check Retry-After header |
+
+---
+
+## All Four Together
+
+If you're setting up all four, your `~/.config/claude/mcp.json` should look like:
 
 ```json
 {
@@ -237,6 +316,12 @@ If you're setting up all three, your `~/.config/claude/mcp.json` should look lik
         "GONG_ACCESS_KEY": "your_gong_key",
         "GONG_ACCESS_KEY_SECRET": "your_gong_secret"
       }
+    },
+    "planhat": {
+      "url": "https://api.planhat.com/v1/mcp",
+      "headers": {
+        "Authorization": "Bearer your_planhat_token"
+      }
     }
   }
 }
@@ -261,7 +346,8 @@ Claude should:
 1. ✅ Fetch posts from Canny
 2. ✅ Fetch tickets from Zendesk
 3. ✅ Fetch calls from Gong
-4. ✅ Synthesize into prioritized insights
+4. ✅ Fetch customer data from Planhat
+5. ✅ Synthesize into prioritized insights
 
 ---
 
@@ -395,6 +481,7 @@ Yes! The toolkit works without MCP, but with limitations:
 - Canny API: https://developers.canny.io/api-reference
 - Zendesk API: https://developer.zendesk.com/api-reference
 - Gong API: https://app.gong.io/settings/api/documentation
+- Planhat API: https://docs.planhat.com
 
 **Questions?**
 - Check service status pages if connections fail

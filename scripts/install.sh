@@ -253,6 +253,14 @@ if [[ $USE_GONG =~ ^[Yy]$ ]]; then
     NEEDS_MCP_SETUP="yes"
 fi
 
+# Planhat
+read -p "Do you use Planhat for customer success? (y/N): " -n 1 -r USE_PLANHAT
+echo ""
+if [[ $USE_PLANHAT =~ ^[Yy]$ ]]; then
+    echo -e "${GREEN}✓ Planhat selected${NC}"
+    NEEDS_MCP_SETUP="yes"
+fi
+
 echo ""
 
 # MCP Setup - Inline if needed
@@ -357,6 +365,35 @@ MCPEOF
             echo "  Access Key: $GONG_ACCESS_KEY"
             echo "  Secret: $GONG_SECRET"
             echo -e "${GREEN}✓ Gong credentials collected${NC}"
+        else
+            echo -e "${YELLOW}⚠ Skipped - you can configure this later${NC}"
+        fi
+        echo ""
+    fi
+
+    # Planhat Setup
+    if [[ $USE_PLANHAT =~ ^[Yy]$ ]]; then
+        echo -e "${BLUE}Configuring Planhat...${NC}"
+        echo ""
+        echo "To get your Planhat API token:"
+        echo "  1. Go to: https://app.planhat.com"
+        echo "  2. Navigate to App Center → + New app → + Private app"
+        echo "  3. Set permissions for the data you need access to"
+        echo "  4. Generate API token (copy it - only shown once!)"
+        echo ""
+        read -p "Enter your Planhat API Token (or press Enter to skip): " PLANHAT_API_TOKEN
+
+        if [ -n "$PLANHAT_API_TOKEN" ]; then
+            echo ""
+            echo "Configuring Planhat MCP server..."
+            echo "  Note: Add to your MCP config file with this format:"
+            echo "  \"planhat\": {"
+            echo "    \"url\": \"https://api.planhat.com/v1/mcp\","
+            echo "    \"headers\": {"
+            echo "      \"Authorization\": \"Bearer $PLANHAT_API_TOKEN\""
+            echo "    }"
+            echo "  }"
+            echo -e "${GREEN}✓ Planhat token collected${NC}"
         else
             echo -e "${YELLOW}⚠ Skipped - you can configure this later${NC}"
         fi

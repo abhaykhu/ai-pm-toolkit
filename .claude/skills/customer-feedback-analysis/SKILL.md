@@ -1,8 +1,8 @@
 ---
 name: customer-feedback-analysis
 command: analyze-feedback
-description: A comprehensive user feedback analysis skill to research, analyze, and prioritize feedback from multiple user feedback communication and channels. This skill should be used when the user asks to "analyze customer feedback", "research feature requests", "synthesize support tickets", "quantify customer demand", "create roadmap priorities", "review recent feedback", "analyze Canny/Zendesk/Gong data", or needs to understand customer pain points for PRD research or roadmap planning. By default, presents each feature request individually without clustering. User can optionally request "cluster feedback" for high-volume analyses.
-version: 1.0.0
+description: A comprehensive user feedback analysis skill to research, analyze, and prioritize feedback from multiple user feedback communication and channels. This skill should be used when the user asks to "analyze customer feedback", "research feature requests", "synthesize support tickets", "quantify customer demand", "create roadmap priorities", "review recent feedback", "analyze Canny/Zendesk/Gong/Planhat data", or needs to understand customer pain points for PRD research or roadmap planning. By default, presents each feature request individually without clustering. User can optionally request "cluster feedback" for high-volume analyses.
+version: 1.1.0
 ---
 
 # Customer Feedback Analysis Skill
@@ -16,7 +16,7 @@ version: 1.0.0
 - "Research feature requests"
 - "Synthesize support tickets"
 - "Review recent feedback"
-- "Analyze Canny/Zendesk/Gong data"
+- "Analyze Canny/Zendesk/Gong/Planhat data"
 
 ## Skill Parameters
 
@@ -35,7 +35,7 @@ version: 1.0.0
    - If not specified: Default to full review and confirm date range
 
 3. **Data Sources**
-   - Which sources to analyze: Canny, Zendesk, Gong, or all?
+   - Which sources to analyze: Canny, Zendesk, Gong, Planhat, or all?
    - If not specified: Default to ALL sources, confirm with user
    - Note: Some sources may have limited data for certain time periods
 
@@ -91,10 +91,11 @@ I need a few details before analyzing feedback:
 - Custom date range
 
 **Question 2: Which data sources?**
-- All sources: Canny + Zendesk + Gong (Recommended)
+- All sources: Canny + Zendesk + Gong + Planhat (Recommended)
 - Canny only
 - Zendesk only
 - Gong only
+- Planhat only
 - Custom combination
 
 **Question 3: Product area focus?**
@@ -113,7 +114,7 @@ Before starting analysis, echo back the scope:
 Confirmed scope:
 - **Time frame:** Last 90 days (2025-10-18 to 2026-01-17)
 - **Analysis mode:** Full review
-- **Data sources:** All (Canny + Zendesk + Gong)
+- **Data sources:** All (Canny + Zendesk + Gong + Planhat)
 - **Product areas:** All
 - **Clustering:** Individual items (default)
 - **Filters:** None (include all feedback)
@@ -123,7 +124,7 @@ Proceeding with analysis...
 
 ## Purpose
 
-This skill analyzes customer feedback from multiple sources (Canny, Zendesk, Gong) to identify **specific, actionable feature requests and problems** that can be directly prioritized for roadmap planning and PRD development.
+This skill analyzes customer feedback from multiple sources (Canny, Zendesk, Gong, Planhat) to identify **specific, actionable feature requests and problems** that can be directly prioritized for roadmap planning and PRD development.
 
 **Key differentiator:** By default, this skill presents each distinct feature request as its own line item—not grouped into broad themes. This eliminates the "generic clustering" problem where feedback gets lumped into vague categories like "Reporting & Analytics" or "Email Improvements." Every item in the output should be specific enough to translate directly into a PRD without additional clarification.
 
@@ -184,7 +185,7 @@ If the user's request doesn't clearly indicate mode and a previous analysis exis
 
 ## Data Sources & Integration
 
-This skill integrates three MCP-connected data sources to provide comprehensive customer feedback analysis:
+This skill integrates four MCP-connected data sources to provide comprehensive customer feedback analysis:
 
 ### Canny (Feature Requests Platform)
 
@@ -243,13 +244,49 @@ This skill integrates three MCP-connected data sources to provide comprehensive 
 - Use `fromDateTime` and `toDateTime` parameters in `list_calls`
 - Focus on customer-facing calls (not internal meetings)
 
+### Planhat (Customer Success Platform)
+
+**What to extract:**
+- Customer health scores and trends
+- Usage metrics and activity data
+- Conversation history and notes
+- Customer attributes (ARR, tier, industry)
+- Churn risk indicators
+- Feature request notes and feedback logged by CSMs
+
+**MCP tool workflow:**
+
+Planhat uses three flexible, generic tools that work with any data model:
+
+1. `mcp__planhat__get_model_actions` - Discover available data models and operations
+2. `mcp__planhat__get_model_action_parameters` - Get parameter schemas for specific operations
+3. `mcp__planhat__perform_model_action` - Execute CRUD operations on data
+
+**Typical workflow:**
+```
+1. get_model_actions → Discover available models (companies, conversations, activities)
+2. perform_model_action(MODEL_ROUTE="companies", OPERATION="list", PARAMETERS="{...}") → Fetch companies with health data
+3. perform_model_action(MODEL_ROUTE="conversations", OPERATION="list", PARAMETERS="{...}") → Fetch CSM conversations
+```
+
+**Date filtering:**
+- Pass date filters in PARAMETERS JSON when listing conversations/activities
+- Focus on companies with declining health scores or churn risk flags
+- Extract feedback mentioned in CSM notes and conversation logs
+
+**Unique value:**
+- Planhat provides CSM-captured feedback that doesn't appear in public channels
+- Health scores add urgency context (feedback from at-risk customers = higher priority)
+- ARR data enables revenue-weighted prioritization
+
 ### Cross-Source Deduplication
 
 When the same feature/problem appears in multiple sources:
-- **Count frequency across sources** (e.g., 5 Canny votes + 2 Zendesk tickets + 1 Gong mention = 8 total mentions)
+- **Count frequency across sources** (e.g., 5 Canny votes + 2 Zendesk tickets + 1 Gong mention + 3 Planhat notes = 11 total mentions)
 - **Use most recent timestamp** across all sources for recency score
-- **Combine urgency indicators** (highest urgency level wins)
+- **Combine urgency indicators** (highest urgency level wins; Planhat health scores add urgency context)
 - **Merge customer lists** (deduplicate by email/organization)
+- **Weight by ARR** when Planhat data available (feedback from high-ARR customers may warrant higher priority)
 
 ## Analysis Framework Overview
 
@@ -412,10 +449,11 @@ If multiple parameters are missing, ask them together:
       "question": "Which data sources should I analyze?",
       "header": "Sources",
       "options": [
-        {"label": "All sources (Recommended)", "description": "Canny + Zendesk + Gong for comprehensive view"},
+        {"label": "All sources (Recommended)", "description": "Canny + Zendesk + Gong + Planhat for comprehensive view"},
         {"label": "Canny only", "description": "Feature requests and votes"},
         {"label": "Zendesk only", "description": "Support tickets"},
-        {"label": "Gong only", "description": "Customer call transcripts"}
+        {"label": "Gong only", "description": "Customer call transcripts"},
+        {"label": "Planhat only", "description": "Customer success data and CSM notes"}
       ],
       "multiSelect": false
     },
@@ -442,7 +480,7 @@ Echo back all parameters for user validation:
 Confirmed analysis scope:
 ✓ Time frame: Last 90 days (2025-10-18 to 2026-01-17)
 ✓ Analysis mode: Full review
-✓ Data sources: All (Canny + Zendesk + Gong)
+✓ Data sources: All (Canny + Zendesk + Gong + Planhat)
 ✓ Product areas: All
 ✓ Organization: Individual items (no clustering)
 ✓ Filters: None
@@ -508,6 +546,13 @@ Execute MCP tool calls in parallel for efficiency:
 2. mcp__gong__retrieve_transcripts for relevant calls
 ```
 
+**If Planhat included:**
+```
+1. mcp__planhat__get_model_actions → discover available models
+2. mcp__planhat__perform_model_action(companies, list) → fetch companies with health data
+3. mcp__planhat__perform_model_action(conversations, list) → fetch CSM conversations with date filters
+```
+
 **If only subset of sources:**
 - Skip tools for excluded sources
 - Note in report which sources were analyzed vs. excluded
@@ -553,6 +598,7 @@ For every feature request/problem:
    - Extract sentiment from Gong transcripts
    - Map Zendesk priority to score
    - Detect frustration indicators in Canny comments
+   - Factor Planhat health scores (low health = higher urgency)
    - Use highest urgency found across sources
 
 4. **Auto-estimate complexity score** (0-100, inverse)
@@ -676,7 +722,7 @@ PRD skill takes over with pre-populated context, starting from Phase 1 (PRD rese
 **Analysis Date:** YYYY-MM-DD
 **Analysis Type:** [Full Review | Incremental Since YYYY-MM-DD]
 **Date Range:** YYYY-MM-DD to YYYY-MM-DD
-**Sources:** Canny (N posts), Zendesk (N tickets), Gong (N calls)
+**Sources:** Canny (N posts), Zendesk (N tickets), Gong (N calls), Planhat (N conversations)
 **Clustering:** Disabled (distinct items presented individually)
 
 ## Executive Summary
@@ -690,7 +736,7 @@ PRD skill takes over with pre-populated context, starting from Phase 1 (PRD rese
 ### Email (N items)
 | # | Feature/Problem | Score | Freq | Recency | Urgency | Complexity | Customers | Sources |
 |---|-----------------|-------|------|---------|---------|------------|-----------|---------|
-| 1 | Flight-level email activity tables | 85.5 | 90 | 100 | 80 | 70 | 12 | Canny (20 votes), Zendesk (3 tickets) |
+| 1 | Flight-level email activity tables | 85.5 | 90 | 100 | 80 | 70 | 12 | Canny (20 votes), Zendesk (3 tickets), Planhat (2 CSM notes) |
 
 **Details:**
 - **Customer Quotes:**
@@ -823,7 +869,7 @@ A successful analysis should:
 1. ✅ **Be actionable:** Every item specific enough to translate to a PRD
 2. ✅ **Be evidence-based:** All claims supported by customer quotes and data
 3. ✅ **Be prioritized:** Clear scoring rationale, not just gut feel
-4. ✅ **Be comprehensive:** All three data sources represented
+4. ✅ **Be comprehensive:** All four data sources represented (when configured)
 5. ✅ **Be organized:** Easy to scan, grouped logically by product area
 6. ✅ **Be persistent:** Metadata enables future trend tracking
 7. ✅ **Avoid generic clustering:** No vague themes like "Reporting Improvements" (unless user explicitly requests clustering)

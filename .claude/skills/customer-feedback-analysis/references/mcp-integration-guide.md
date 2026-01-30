@@ -1,16 +1,17 @@
 # MCP Integration Guide - Tool Usage Patterns
 
-This guide provides detailed examples and patterns for using Canny, Zendesk, and Gong MCP tools to collect customer feedback data.
+This guide provides detailed examples and patterns for using Canny, Zendesk, Gong, and Planhat MCP tools to collect customer feedback data.
 
 ## Overview
 
-The customer feedback analysis skill integrates three MCP-connected data sources:
+The customer feedback analysis skill integrates four MCP-connected data sources:
 
 | Source | Provider | Primary Data | MCP Tools Available |
 |--------|----------|--------------|---------------------|
 | **Canny** | Feature request platform | Posts, votes, comments, scores | `get_boards`, `get_posts`, `get_post`, `search_posts` |
 | **Zendesk** | Support ticket system | Tickets, priority, comments, customer info | `get_tickets`, `get_ticket`, `get_ticket_comments` |
 | **Gong** | Call recording/transcription | Call transcripts, topics, sentiment | `list_calls`, `retrieve_transcripts` |
+| **Planhat** | Customer success platform | Health scores, conversations, activities, customer data | `get_model_actions`, `get_model_action_parameters`, `perform_model_action` |
 
 ## Canny MCP Tools
 
@@ -798,6 +799,293 @@ Filter calls to focus on customer conversations:
 
 ---
 
+## Planhat MCP Tools
+
+Planhat's MCP server uses three flexible, generic tools that work with any Planhat data model. This approach allows querying Companies, Conversations, Activities, and other models dynamically.
+
+### Tool: `mcp__planhat__get_model_actions`
+
+**Purpose:** Discover available Planhat data models and their supported operations.
+
+**Parameters:** None
+
+**Example call:**
+
+```json
+{
+  "tool": "mcp__planhat__get_model_actions"
+}
+```
+
+**Example response:**
+
+```json
+[
+  {
+    "model": "companies",
+    "operations": ["create", "update", "view", "list"]
+  },
+  {
+    "model": "conversations",
+    "operations": ["create", "update", "view", "list"]
+  },
+  {
+    "model": "activities",
+    "operations": ["view", "list"]
+  },
+  {
+    "model": "endusers",
+    "operations": ["create", "update", "view", "list"]
+  }
+]
+```
+
+**Usage pattern:**
+1. Call this first to discover what models and operations are available
+2. Note: Available models depend on your Private App permissions
+3. Use the model names and operations with `perform_model_action`
+
+---
+
+### Tool: `mcp__planhat__get_model_action_parameters`
+
+**Purpose:** Get the parameter schema for a specific model-operation combination.
+
+**Parameters:**
+- `MODEL_ROUTE` (required): Target data model (e.g., "companies", "conversations")
+- `OPERATION` (required): Desired operation ("create", "update", "view", "list")
+
+**Example call:**
+
+```json
+{
+  "tool": "mcp__planhat__get_model_action_parameters",
+  "MODEL_ROUTE": "companies",
+  "OPERATION": "list"
+}
+```
+
+**Example response:**
+
+```json
+{
+  "parameters": {
+    "limit": {"type": "integer", "description": "Number of results"},
+    "offset": {"type": "integer", "description": "Pagination offset"},
+    "sort": {"type": "string", "description": "Sort field"},
+    "filter": {"type": "object", "description": "Filter criteria"}
+  },
+  "required": []
+}
+```
+
+**Usage pattern:**
+1. Call this to understand what parameters are available for a specific operation
+2. Use the schema to build valid requests for `perform_model_action`
+
+---
+
+### Tool: `mcp__planhat__perform_model_action`
+
+**Purpose:** Execute CRUD operations on Planhat data.
+
+**Parameters:**
+- `MODEL_ROUTE` (required): Target data model (e.g., "companies", "conversations")
+- `OPERATION` (required): Operation type ("create", "update", "view", "list")
+- `PARAMETERS` (required): JSON string containing operation-specific data
+
+**Example call - List companies with low health:**
+
+```json
+{
+  "tool": "mcp__planhat__perform_model_action",
+  "MODEL_ROUTE": "companies",
+  "OPERATION": "list",
+  "PARAMETERS": "{\"limit\": 50, \"sort\": \"health\"}"
+}
+```
+
+**Example response:**
+
+```json
+{
+  "data": [
+    {
+      "id": "company_abc123",
+      "name": "ACME Nonprofit",
+      "health": 35,
+      "mrr": 450,
+      "churnRisk": "high",
+      "lastActivity": "2026-01-10T14:00:00Z"
+    }
+  ]
+}
+```
+
+**Example call - List conversations:**
+
+```json
+{
+  "tool": "mcp__planhat__perform_model_action",
+  "MODEL_ROUTE": "conversations",
+  "OPERATION": "list",
+  "PARAMETERS": "{\"limit\": 100}"
+}
+```
+
+---
+
+### Workflow for Feedback Analysis
+
+**Step 1: Discover available models**
+```
+Call: get_model_actions
+→ Identifies available models (companies, conversations, activities, etc.)
+```
+
+**Step 2: Get parameter schemas (optional)**
+```
+Call: get_model_action_parameters(MODEL_ROUTE="companies", OPERATION="list")
+→ Understand filtering/sorting options
+```
+
+**Step 3: Fetch companies with health data**
+```
+Call: perform_model_action(MODEL_ROUTE="companies", OPERATION="list", PARAMETERS="{...}")
+→ Get customer list with health scores, ARR, churn risk
+```
+
+**Step 4: Fetch conversations for feedback extraction**
+```
+Call: perform_model_action(MODEL_ROUTE="conversations", OPERATION="list", PARAMETERS="{...}")
+→ Get CSM notes containing feature requests, pain points
+```
+
+---
+
+### What to Extract from Planhat Data
+
+**From Companies:**
+- `name` - Company/customer name for deduplication
+- `health` - Health score (0-100) for urgency weighting
+- `mrr`/`arr` - Revenue data for priority weighting
+- `churnRisk` - Direct churn risk indicator
+- `lastActivity` - Recency indicator
+
+**From Conversations:**
+- Content containing feature requests, pain points, feedback
+- Customer identification for frequency counting
+- Timestamps for recency
+- Tags that may indicate feature requests or escalations
+
+**From Activities:**
+- Activity patterns indicating frustration (high support volume)
+- Feature usage gaps
+- Support activity linked to feature requests
+
+**Extracting feedback from conversations:**
+
+CSM notes often contain indirect feedback. Look for:
+- **Feature requests:** "Customer asked for...", "They need...", "Requested..."
+- **Pain points:** "Frustrated with...", "Struggling to...", "Can't do..."
+- **Urgency signals:** "Blocking...", "Escalated...", "Critical for..."
+- **Competitive mentions:** "Mentioned [competitor]...", "Looking at alternatives..."
+- **Churn signals:** "May not renew...", "Evaluating options..."
+
+**Example extraction:**
+
+```markdown
+**Feature:** Flight-level email activity tables
+**Quote (CSM note):** "Customer expressed frustration with email reporting. They need to see flight-level performance data but currently export to CSV. Requested this feature multiple times. Said it's blocking their executive reporting workflow."
+**Customer:** ACME Nonprofit
+**Date:** 2026-01-10
+**Health Score:** 35 (low - at-risk customer)
+**Urgency:** High (churn risk + blocking workflow)
+```
+
+---
+
+### Health Score Interpretation
+
+Planhat health scores provide urgency context:
+
+| Health Score | Urgency Boost | Interpretation |
+|--------------|---------------|----------------|
+| 0-25 | +30 pts | Critical - high churn risk, prioritize feedback |
+| 26-50 | +20 pts | At-risk - significant churn potential |
+| 51-75 | +10 pts | Moderate - some concerns |
+| 76-100 | +0 pts | Healthy - standard priority |
+
+Apply health score boost to urgency calculations:
+
+```python
+base_urgency = calculate_urgency_from_content(conversation)
+health_boost = get_health_boost(company.health)
+final_urgency = min(100, base_urgency + health_boost)
+```
+
+---
+
+### ARR-Weighted Prioritization
+
+When Planhat provides ARR data, optionally weight by revenue impact:
+
+**Method 1: ARR multiplier**
+```python
+arr_multiplier = 1 + (company.arr / 10000)  # e.g., $50K ARR = 6x multiplier
+weighted_frequency = frequency * arr_multiplier
+```
+
+**Method 2: ARR buckets**
+
+| ARR Tier | Multiplier | Example |
+|----------|------------|---------|
+| <$5K | 1.0x | Starter customers |
+| $5K-$25K | 1.5x | Growth customers |
+| $25K-$100K | 2.0x | Mid-market |
+| >$100K | 3.0x | Enterprise |
+
+Use ARR weighting when:
+- Prioritizing for revenue retention
+- Enterprise feedback analysis
+- Churn risk mitigation planning
+
+---
+
+### Linking Planhat to Other Sources
+
+**Cross-source customer matching:**
+
+Planhat provides authoritative customer data (name, email, company). Use this to:
+1. Match Canny posts to specific customers via email
+2. Enrich Zendesk tickets with ARR/health context
+3. Link Gong call participants to company records
+
+**Example matching logic:**
+
+```python
+# Get Planhat customer list with emails
+planhat_customers = {
+    contact.email.lower(): {
+        "company": company.name,
+        "arr": company.arr,
+        "health": company.health,
+        "tier": company.tier
+    }
+    for company in planhat_companies
+    for contact in company.contacts
+}
+
+# Enrich Canny post with Planhat data
+canny_email = canny_post.author.email.lower()
+if canny_email in planhat_customers:
+    post.arr = planhat_customers[canny_email]["arr"]
+    post.health = planhat_customers[canny_email]["health"]
+    post.tier = planhat_customers[canny_email]["tier"]
+```
+
+---
+
 ## Cross-Source Data Integration
 
 ### Deduplicating Customers Across Sources
@@ -810,6 +1098,7 @@ Filter calls to focus on customer conversations:
    - **Canny:** `author.email` from posts, `author.email` from comments
    - **Zendesk:** `requester.email` from tickets
    - **Gong:** `participants.email` where `role = "customer"`
+   - **Planhat:** `contacts.email` from companies, company names from conversations
 
 2. **Normalize emails:**
    - Convert to lowercase
@@ -829,6 +1118,10 @@ Filter calls to focus on customer conversations:
    for participant in gong_call.participants:
        if participant.role == "customer":
            customers.add(participant.email.lower())
+
+   # From Planhat
+   for contact in planhat_company.contacts:
+       customers.add(contact.email.lower())
 
    # Frequency = total unique customers
    frequency = len(customers)
@@ -858,13 +1151,15 @@ Multi-source mentions signal stronger need/urgency.
    - Canny: `post.updated` (most recent activity), `post.created` (original request)
    - Zendesk: `ticket.updated_at` (most recent comment), `ticket.created_at` (original request)
    - Gong: `call.started` (call date)
+   - Planhat: `conversation.date` (conversation/note date), `company.lastActivity`
 
 2. **Find maximum (most recent):**
    ```python
    all_timestamps = [
        canny_post.updated,
        zendesk_ticket.updated_at,
-       gong_call.started
+       gong_call.started,
+       planhat_conversation.date
    ]
 
    most_recent = max(all_timestamps)
@@ -888,6 +1183,7 @@ Multi-source mentions signal stronger need/urgency.
    - **Canny:** Comment sentiment analysis → urgency score (0-100)
    - **Zendesk:** Priority mapping → urgency score (urgent=100, high=75, normal=50, low=25)
    - **Gong:** Keyword matching → urgency score (0-100)
+   - **Planhat:** Health score mapping → urgency boost (0-30 based on health), conversation sentiment
 
 2. **Take maximum:**
    ```python
@@ -901,6 +1197,9 @@ Multi-source mentions signal stronger need/urgency.
 
    # Gong
    urgency_scores.append(analyze_gong_transcript(gong_transcript))
+
+   # Planhat
+   urgency_scores.append(analyze_planhat_health(planhat_company.health))
 
    final_urgency = max(urgency_scores)
    ```
@@ -1074,10 +1373,20 @@ When running analysis, follow this checklist:
   - [ ] Retrieve transcripts for relevant calls
   - [ ] Extract feature requests, urgency keywords, customer info
 
+- [ ] **Planhat:**
+  - [ ] Discover available models with `get_model_actions`
+  - [ ] Fetch companies with health scores using `perform_model_action`
+  - [ ] Get conversations within date range
+  - [ ] Filter for conversations containing feature requests/feedback
+  - [ ] Extract health scores, ARR, churn risk, CSM notes
+  - [ ] Use customer data to enrich other sources
+
 - [ ] **Cross-source integration:**
   - [ ] Deduplicate customers by email
   - [ ] Use most recent timestamp for recency
   - [ ] Use highest urgency score across sources
+  - [ ] Apply Planhat health score boost to urgency
+  - [ ] Optionally weight by ARR from Planhat
   - [ ] Merge quotes and context from all sources
 
 - [ ] **Data validation:**

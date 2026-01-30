@@ -1,6 +1,6 @@
 # Customer Feedback Analysis Skill
 
-A comprehensive Claude Code skill for analyzing customer feedback from Canny, Zendesk, and Gong to inform product roadmap prioritization at Feathr.
+A comprehensive Claude Code skill for analyzing customer feedback from Canny, Zendesk, Gong, and Planhat to inform product roadmap prioritization at Feathr.
 
 ## Quick Start
 
@@ -17,13 +17,13 @@ Simply ask Claude Code to "analyze customer feedback" in a regular conversation.
 Example invocations:
 - "Analyze all customer feedback from the last 90 days"
 - "Analyze recent feedback since the last run"
-- "Review Canny, Zendesk, and Gong feedback for Q1 roadmap planning"
+- "Review Canny, Zendesk, Gong, and Planhat feedback for Q1 roadmap planning"
 - "Analyze email feedback from Q4 2025"
 - `/analyze-feedback` (slash command)
 
 **The skill will prompt you for any missing parameters:**
 - Time frame (last 30/60/90 days, custom range, since last run)
-- Data sources (Canny, Zendesk, Gong, or all)
+- Data sources (Canny, Zendesk, Gong, Planhat, or all)
 - Product area focus (all areas or specific: Email, Advertising, Fundraising, etc.)
 - Clustering preference (individual items or grouped themes)
 - Optional filters (minimum customer count, urgency level, customer tier)
@@ -38,7 +38,7 @@ The skill uses a comprehensive parameter system to ensure analysis scope is clea
 |-----------|---------|---------|-------------|
 | **Time Frame** | Last 30/60/90 days, Q4 2025, Since last run, Custom | Must specify | Date range for analysis |
 | **Analysis Mode** | Full review, Incremental (since last run) | Auto-detect from time frame | Type of analysis |
-| **Data Sources** | All, Canny only, Zendesk only, Gong only | All sources | Which feedback sources to include |
+| **Data Sources** | All, Canny only, Zendesk only, Gong only, Planhat only | All sources | Which feedback sources to include |
 
 ### Optional Parameters
 
@@ -76,6 +76,7 @@ The skill uses a comprehensive parameter system to ensure analysis scope is clea
 - **Canny:** Feature requests, votes, comments, scores
 - **Zendesk:** Support tickets, priority levels, customer context
 - **Gong:** Call transcripts, sentiment analysis, urgency indicators
+- **Planhat:** Customer success data, health scores, CSM conversations, churn risk
 
 ### ✅ Individual Feature Request Tracking (Default)
 - Each distinct feature request is a separate, actionable line item
@@ -118,7 +119,7 @@ customer-feedback-analysis/
 ├── README.md                          # This file
 ├── references/
 │   ├── analysis-framework.md          # Detailed methodology (individual vs. clustered)
-│   ├── mcp-integration-guide.md       # Canny, Zendesk, Gong tool usage
+│   ├── mcp-integration-guide.md       # Canny, Zendesk, Gong, Planhat tool usage
 │   ├── prioritization-rubric.md      # Scoring formulas and examples
 │   └── output-examples.md             # Report formatting reference
 ├── examples/
@@ -143,7 +144,7 @@ Analysis reports are saved to:
 | Feature | Legacy Agent | New Skill |
 |---------|--------------|-----------|
 | **Invocation** | Manual (`invoke feedback-analyzer`) | Auto-discovered |
-| **Data Sources** | Canny only (manual exports) | Canny + Zendesk + Gong (MCP) |
+| **Data Sources** | Canny only (manual exports) | Canny + Zendesk + Gong + Planhat (MCP) |
 | **Organization** | Thematic clustering (too generic) | ✅ Individual items (default) |
 | **Prioritization** | Vote count + ARR | 4-factor scoring |
 | **Incremental Mode** | ❌ No | ✅ Yes |
@@ -162,7 +163,7 @@ User: "Analyze all customer feedback from the last 90 days"
 
 Skill will:
 1. Prompt for date range confirmation
-2. Fetch data from Canny, Zendesk, Gong
+2. Fetch data from Canny, Zendesk, Gong, Planhat
 3. Organize as individual feature requests
 4. Score each item (frequency, recency, urgency, complexity)
 5. Generate PRD-ready problem statements
@@ -224,6 +225,6 @@ The previous `feedback-analyzer` agent has been marked as **[DEPRECATED]** with 
 
 ---
 
-**Version:** 1.0.0
-**Last Updated:** 2026-01-17
+**Version:** 1.1.0
+**Last Updated:** 2026-01-29
 **Author:** Claude Code Implementation

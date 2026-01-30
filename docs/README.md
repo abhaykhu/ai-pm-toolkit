@@ -12,7 +12,7 @@ This directory contains a PM Toolkit for AI-powered product management work.
 
 **Creating an issue?** Run `/scope` in Claude Code to start the guided workflow for any issue type.
 
-**Analyzing feedback?** Run `/analyze-feedback` to synthesize Canny, Zendesk, and Gong data.
+**Analyzing feedback?** Run `/analyze-feedback` to synthesize Canny, Zendesk, Gong, and Planhat data.
 
 ---
 
@@ -69,7 +69,7 @@ docs/
 
 ### `/analyze-feedback` - Customer Feedback Analysis
 
-**Multi-source feedback synthesis from Canny, Zendesk, and Gong:**
+**Multi-source feedback synthesis from Canny, Zendesk, Gong, and Planhat:**
 
 - Fetches data across configurable time ranges
 - Synthesizes feedback by theme
@@ -199,6 +199,7 @@ The toolkit integrates with external services via Model Context Protocol (MCP):
 | **Feedback** | Canny | Research feature requests, track sentiment |
 | **Support** | Zendesk | Analyze tickets, identify pain points |
 | **Calls** | Gong | Review customer conversations, extract insights |
+| **Customer Success** | Planhat | Customer health scores, CSM conversations, churn risk |
 
 **See:** [TOOLKIT-GUIDE.md](TOOLKIT-GUIDE.md#mcp-tool-integrations) for detailed tool usage guide.
 
