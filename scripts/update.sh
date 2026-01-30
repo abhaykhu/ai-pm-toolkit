@@ -52,6 +52,7 @@ echo "This will update:"
 echo "  - .claude/skills/*"
 echo "  - docs/templates/*"
 echo "  - docs/reference/*"
+echo "  - docs/*.md (MCP-SETUP, README, TOOLKIT-GUIDE, ONBOARDING, CONFIGURATION-REFERENCE)"
 echo ""
 echo "This will NOT touch:"
 echo "  - CLAUDE.md"
@@ -122,6 +123,25 @@ if [ -d "$TOOLKIT_DIR/docs/reference" ]; then
     echo -e "${GREEN}  Done${NC}"
 fi
 
+# Update top-level docs (MCP-SETUP, README, TOOLKIT-GUIDE)
+echo -e "${YELLOW}Updating documentation...${NC}"
+if [ -f "$TOOLKIT_DIR/docs/MCP-SETUP.md" ]; then
+    cp "$TOOLKIT_DIR/docs/MCP-SETUP.md" "$TARGET_DIR/docs/"
+fi
+if [ -f "$TOOLKIT_DIR/docs/README.md" ]; then
+    cp "$TOOLKIT_DIR/docs/README.md" "$TARGET_DIR/docs/"
+fi
+if [ -f "$TOOLKIT_DIR/docs/TOOLKIT-GUIDE.md" ]; then
+    cp "$TOOLKIT_DIR/docs/TOOLKIT-GUIDE.md" "$TARGET_DIR/docs/"
+fi
+if [ -f "$TOOLKIT_DIR/docs/ONBOARDING.md" ]; then
+    cp "$TOOLKIT_DIR/docs/ONBOARDING.md" "$TARGET_DIR/docs/"
+fi
+if [ -f "$TOOLKIT_DIR/docs/CONFIGURATION-REFERENCE.md" ]; then
+    cp "$TOOLKIT_DIR/docs/CONFIGURATION-REFERENCE.md" "$TARGET_DIR/docs/"
+fi
+echo -e "${GREEN}  Done${NC}"
+
 echo ""
 echo -e "${GREEN}═══════════════════════════════════════════════════${NC}"
 echo -e "${GREEN}   Update complete${NC}"
@@ -131,6 +151,7 @@ echo "Updated:"
 echo "  - .claude/skills/*"
 echo "  - docs/templates/*"
 echo "  - docs/reference/*"
+echo "  - docs/*.md (MCP-SETUP, README, TOOLKIT-GUIDE, etc.)"
 echo ""
 echo -e "${YELLOW}Note: If skill commands changed (e.g., /prd → /scope),${NC}"
 echo -e "${YELLOW}update your CLAUDE.md skill table manually.${NC}"
