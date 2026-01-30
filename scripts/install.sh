@@ -1140,7 +1140,7 @@ if [ ! -f "$TARGET_DIR/.gitignore" ]; then
 # AI PM Toolkit
 .DS_Store
 *.log
-.claude/.mcp.json
+.claude/mcp_settings.json
 docs/prds/*.backup.md
 docs/feedback-analysis/*.backup.md
 EOF

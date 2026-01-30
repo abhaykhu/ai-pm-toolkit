@@ -24,7 +24,7 @@ The **Customer Feedback Analysis** skill (`/analyze-feedback`) needs access to y
 3. Test the connection
 
 **Where configuration lives:**
-- MCP config file: `~/.config/claude/mcp.json` (Claude Code stores this globally)
+- MCP config file: `~/.claude/mcp_settings.json` (Claude Code stores this globally)
 - API keys are stored securely by Claude Code
 
 ---
@@ -57,7 +57,7 @@ The **Customer Feedback Analysis** skill (`/analyze-feedback`) needs access to y
 
 **Option B: Manual Configuration**
 
-Edit `~/.config/claude/mcp.json`:
+Edit `~/.claude/mcp_settings.json`:
 
 ```json
 {
@@ -118,7 +118,7 @@ If configured correctly, Claude will show your Canny boards.
 
 **Option B: Manual Configuration**
 
-Edit `~/.config/claude/mcp.json`:
+Edit `~/.claude/mcp_settings.json`:
 
 ```json
 {
@@ -180,7 +180,7 @@ If configured correctly, Claude will show recent tickets.
 
 **Option B: Manual Configuration**
 
-Edit `~/.config/claude/mcp.json`:
+Edit `~/.claude/mcp_settings.json`:
 
 ```json
 {
@@ -229,7 +229,7 @@ If configured correctly, Claude will show recent calls.
 
 ### Step 2: Configure MCP Server
 
-Edit `~/.config/claude/mcp.json` (or `~/Library/Application Support/Claude/claude_desktop_config.json` for Claude Desktop):
+Edit `~/.claude/mcp_settings.json` (for Claude Code) or `~/Library/Application Support/Claude/claude_desktop_config.json` (for Claude Desktop):
 
 ```json
 {
@@ -288,7 +288,7 @@ Claude will use `get_model_actions` to discover available models, then `perform_
 
 ## All Four Together
 
-If you're setting up all four, your `~/.config/claude/mcp.json` should look like:
+If you're setting up all four, your `~/.claude/mcp_settings.json` should look like:
 
 ```json
 {
@@ -361,7 +361,7 @@ Claude should:
 1. Verify API key in service settings
 2. Check if token has required permissions
 3. Regenerate API key if needed
-4. Update `mcp.json` with new key
+4. Update `mcp_settings.json` with new key
 5. Restart Claude Code
 
 ### "Cannot find module" or "Command not found"
@@ -398,10 +398,10 @@ Claude should:
 ## Security Best Practices
 
 **API Key Storage:**
-- ✅ Keys stored in `mcp.json` are local to your machine
+- ✅ Keys stored in `mcp_settings.json` are local to your machine
 - ✅ Not shared or transmitted except to the service
 - ✅ Use read-only API keys when possible
-- ❌ Don't commit `mcp.json` to git (it's in `~/.config`, not your project)
+- ❌ Don't commit `mcp_settings.json` to git (it's in `~/.claude`, not your project)
 
 **API Key Permissions:**
 - Only grant "Read" permissions (no Write/Delete)
