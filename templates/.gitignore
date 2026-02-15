@@ -1,0 +1,7 @@
+# AI PM Toolkit
+.mcp.json
+.DS_Store
+
+# Optional: Uncomment to exclude context and outputs from version control
+# context/
+# outputs/
